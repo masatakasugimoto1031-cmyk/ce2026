@@ -1,2 +1,1 @@
-// 受け口のURL（Apps Script をデプロイしたときの「ウェブアプリのURL」を '' の中に貼る）
-window.CE_CONFIG = { endpoint: '', version: 'v1.0（2026年11月）' };
+window.CE_CONFIG = { endpoint: 'https://script.google.com/macros/s/AKfycbwR2CafP8_3ka_IfsUnNWg99Eyjq0KDswV_WETl7FGAXGyr4-mFN08O_h50k8wSjGOI/exec', version: 'v1.1（2026年11月）' };
