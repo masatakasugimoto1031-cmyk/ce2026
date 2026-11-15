@@ -61,7 +61,7 @@ function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clear
 function fmt(d){if(!d)return '';const x=new Date(d);return `${x.getMonth()+1}/${x.getDate()} ${String(x.getHours()).padStart(2,'0')}:${String(x.getMinutes()).padStart(2,'0')}`;}
 async function load(){try{const r=await fetch(CFG.endpoint+'?'+new URLSearchParams({op:'all',admin:ADMIN}));const j=await r.json();if(!j.ok)throw new Error(j.err);DATA=parse(j);sessionStorage.setItem('ce_admin',ADMIN);render();toast('読み込みました');}catch(e){toast(e.message);if(!DATA)renderLogin();}}
 function parse(j){const subs={},team={},recs={},judge={},tph={},files={};
- j.subs.forEach(r=>{const [at,sid,name,kind,tm,c]=r;subs[sid]=subs[sid]||{sid,name};subs[sid].name=name;subs[sid][kind]={at,data:JSON.parse(c)};});
+ j.subs.forEach(r=>{const [at,sid0,name,kind,tm,c]=r;const sid=String(sid0);subs[sid]=subs[sid]||{sid,name};subs[sid].name=name;subs[sid][kind]={at,data:JSON.parse(c)};});
  j.team.forEach(r=>{const [at,t,sid,ph,c]=r;const d=JSON.parse(c);team[t]={at,phase:ph,data:d};tph[t]=tph[t]||{};if(ph&&ph!=='save')tph[t][ph]={at,data:d};});(j.files||[]).forEach(r=>{const [at,t,sid,fn,url]=r;files[t]={at,fn,url};});
  j.recs.forEach(r=>{const [at,t,sid,rid,c]=r;recs[t]=recs[t]||{};recs[t][rid]={at,sid,data:JSON.parse(c)};});
  j.judge.forEach(r=>{const [at,co,t,c]=r;const d=JSON.parse(c);judge[t]=judge[t]||{};judge[t][d.kind||'judge']={at,co,data:d};});

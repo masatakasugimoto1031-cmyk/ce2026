@@ -302,7 +302,8 @@ function secPpt(){return `<div class="grid2"><div class="box"><h3>PowerPointに�
  ${isRec()?`<div class="bar"><input type="file" id="pptIn" accept=".pptx,.pdf"><button class="btn" data-act="upload">ファイルを提出</button></div>${S.tsent.file?`<p class="note">提出済み：${esc(S.tsent.fileName||'')}　${fmt(S.tsent.file)}</p>`:''}`:''}</div></div>`;}
 
 /* ---------- PPT ---------- */
-function loadPptx(){return new Promise((ok,ng)=>{if(window.PptxGenJS)return ok();const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js';s.onload=ok;s.onerror=()=>ng(new Error('書き出しの部品を読み込めませんでした（ネットにつながっているか確認）'));document.head.appendChild(s);});}
+const PPTX_SRC=['https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js','https://unpkg.com/pptxgenjs@3.12.0/dist/pptxgen.bundle.js'];
+function loadPptx(){return new Promise((ok,ng)=>{if(window.PptxGenJS)return ok();let i=0;const next=()=>{if(i>=PPTX_SRC.length)return ng(new Error('書き出しの部品を読み込めませんでした（ネットにつながっているか確認）'));const s=document.createElement('script');s.src=PPTX_SRC[i++];s.onload=()=>window.PptxGenJS?ok():next();s.onerror=next;document.head.appendChild(s);};next();});}
 async function exportPpt(){try{await loadPptx();}catch(e){toast(e.message);return;}const T=S.T,H=T.hyp,P=T.path,rs=recStats(),m=S.mine||{};const pres=new PptxGenJS();pres.layout='LAYOUT_WIDE';
  const AC='750145',DK='5D0037',LT='F4E8EF',INK='1F2328',SUB='59636E',F='Yu Gothic';
  const head=(s,t,n)=>{s.background={color:'FFFFFF'};s.addShape(pres.ShapeType.rect,{x:0,y:7.2,w:13.33,h:0.3,fill:{color:AC},line:{color:AC}});s.addText(t,{x:0.75,y:0.35,w:12.05,h:0.7,fontFace:F,fontSize:26,bold:true,color:INK,isTextBox:true,margin:0});s.addShape(pres.ShapeType.rect,{x:0.5,y:0.38,w:0.08,h:0.62,fill:{color:AC},line:{color:AC}});if(n)s.addText(String(n),{x:12.4,y:7.2,w:0.8,h:0.3,fontSize:10,color:'FFFFFF',align:'right',isTextBox:true});};
