@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CE特論 ワークベンチ｜依頼主の新規事業担当として</title>
+<script src="config.js"></script>
+<style>
+:root{--ac:#750145;--ac-d:#5d0037;--ac-m:#ac668f;--ac-l:#f4e8ef;--ac-l2:#e3ccd9;--ink:#1f2328;--sub:#59636e;--line:#d8dde3;--soft:#f6f7f9;--ok:#1f7a4d;--warn:#a15c00;--fs:16px}
+html.big{--fs:18px}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP","Yu Gothic UI",sans-serif;font-size:var(--fs);color:var(--ink);line-height:1.55;background:#fff}
+button,input,textarea,select{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:8px 16px;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ac)}
+.who{color:var(--sub);font-size:.88em}
+.conds{display:flex;gap:4px;margin-left:auto;align-items:center}
+.conds span.l{font-size:.78em;color:var(--sub);margin-right:4px}
+.cd{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-size:.8em;font-weight:800;background:var(--soft);color:var(--sub);border:1px solid var(--line);cursor:default}
+.cd.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.hbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.86em}
+.hbtn.p{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:700}
+.wrap{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:calc(100% - 60px)}
+nav.side{border-right:1px solid var(--line);background:var(--soft);padding:12px 10px;position:sticky;top:57px;height:calc(100vh - 57px);overflow:auto}
+.grp{font-size:.76em;font-weight:800;color:var(--sub);margin:14px 8px 6px;letter-spacing:.02em}
+.it{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;width:100%;border:0;background:transparent;text-align:left;padding:7px 10px;border-radius:8px;cursor:pointer}
+.it:hover{background:#fff}
+.it.on{background:#fff;box-shadow:inset 3px 0 0 var(--ac);font-weight:700}
+.it small{display:block;color:var(--sub);font-size:.76em;font-weight:400}
+.st{font-size:.72em;border-radius:999px;padding:2px 8px;white-space:nowrap;background:#fff;border:1px solid var(--line);color:var(--sub)}
+.st.done{background:var(--ac-l);border-color:var(--ac-l2);color:var(--ac-d)}
+.st.sent{background:var(--ac);border-color:var(--ac);color:#fff}
+main{padding:18px 28px 80px;max-width:1280px}
+h1{font-size:1.5em;margin:4px 0 2px}
+.meta{color:var(--sub);font-size:.88em;margin-bottom:12px}
+.meta b{color:var(--ac-d)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}
+.box.soft{background:var(--soft);border-color:transparent}
+.box h3{margin:0 0 6px;font-size:1em;color:var(--ac-d)}
+label.f{display:block;font-size:.84em;font-weight:700;color:var(--sub);margin:10px 0 4px}
+textarea,input[type=text],select{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--ac-l2);border-color:var(--ac-m)}
+textarea{resize:vertical;min-height:2.3em}
+table.t{border-collapse:collapse;width:100%;font-size:.92em}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+table.t th{background:var(--soft);font-weight:700;font-size:.9em}
+table.t td.c,table.t th.c{text-align:center}
+table.t textarea,table.t input[type=text]{border-color:transparent;background:transparent;padding:4px}
+table.t textarea:focus,table.t input:focus{background:#fff;border-color:var(--ac-m)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;border-right:1px solid var(--line);background:#fff;padding:5px 10px;cursor:pointer;font-size:.9em;white-space:nowrap}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--ac);color:#fff;font-weight:700}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer}
+.btn.g{background:#fff;color:var(--ac-d);border:1px solid var(--ac)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.note{color:var(--sub);font-size:.86em}
+.warn{color:var(--warn);font-weight:700}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.kpi div{background:var(--ac-l);color:var(--ac-d);border-radius:8px;padding:6px 12px;font-weight:700;font-size:.92em}
+.cell{border:1px solid var(--line);border-radius:8px;background:#fff;min-height:58px;padding:6px 8px;cursor:pointer;text-align:left;width:100%}
+.cell.on{border-color:var(--ac);background:var(--ac-l)}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+fieldset[disabled] textarea,fieldset[disabled] input{background:var(--soft)}
+.ro{background:#fff7e6;border:1px solid #f0d9a8;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.9em}
+.toast{position:fixed;right:18px;bottom:18px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;opacity:0;transition:opacity .3s;z-index:9;max-width:420px}
+.toast.on{opacity:.95}
+.mob{max-width:560px;margin:0 auto;padding:16px}
+.mob h1{font-size:1.3em}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}nav.side{position:static;height:auto}.grid2,.grid3{grid-template-columns:1fr}.conds{margin-left:0}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="fileIn" accept=".json" style="display:none">
+<script>
+"use strict";
+const CFG=window.CE_CONFIG||{endpoint:'',version:''};
+const KEY='ce2026_wb';
+const COMP=['JR九州','西鉄'];
+const Q7=[
+ {id:'A2',f:'ひと',k:'人が集まるか',q:'社員はどこから来ているか。頼まずに応募が来るか'},
+ {id:'B3',f:'技とノウハウ',k:'外で通じる名前',q:'その名前で社外から指名・問い合わせが来るか'},
+ {id:'C1',f:'まわす力',k:'受け入れる余地',q:'曜日・時期で空く設備・場所・人手はあるか'},
+ {id:'D1',f:'つながり',k:'一緒に動く相手',q:'困ったときに無理を聞き合える取引先はあるか'},
+ {id:'E2',f:'選ばれる理由',k:'なぜ選ばれるか',q:'顧客はなぜ選ぶと言ったか（誰が・いつ）'},
+ {id:'F2',f:'土地との関わり',k:'地元とのやり取り',q:'自治体・地元金融機関と定常のやり取りはあるか'},
+ {id:'G1',f:'組んだ実績',k:'一緒に立ち上げた例',q:'他社・行政・大学と立ち上げ、今も動くものは'}];
+const SYM=['◎','○','△','？'];
+const WHO=['本人','同じ立場','関係者','対象外'];
+const RX=['言った','動いた','対価を出した','続けた'];
+const RXR={'言った':1,'動いた':2,'対価を出した':3,'続けた':4};
+const STAR=['合っていた','外れた','まだ分からない'];
+const COND=['依頼主のどの強み（外に出せる強み）を使うかを、出所と一緒に指差せる','届ける相手が名前か特定できる立場で分かっていて、いまの代わりの手段を知っている','組む相手と、相手に増えるものが、相手の側の言葉で書かれている','年末年始の聞き取りで、本人か同じ立場の人から「動いた」以上の反応を1つ以上得た（得られなければ理由）','やめる条件と★があり、聞き取りでどうなったかが書かれている','始めるための3つの問いに答えられ、最初の一歩が本業を止めず半年以内に試せる','社内で通す道：誰が決め、どの場で通し、社内の何を借り、既存事業とどうぶつかり・助け合うか（代わりの道も1行）'];
+const REVROWS=['いちばん確かでない条件（★）','届ける相手・場面','渡すもの','相手が払うもの','社内の資源と既存事業との関係'];
+
+function blankT(){return {interview:{q1:'',q2:'',who:'',where:'',res:'',conflict:'',qa:''},treas:[0,1,2,3,4].map(()=>({w:'',q:'',src:''})),troubles:['','',''],cell:null,far:'',ai:{ans:''},
+ hyp:{who:'',scene:'',alt:'',altCost:'',give:'',pay:'',p1:'',p2:'',star:'',stop:''},mid:{path:'',next:''},
+ rev:{rows:REVROWS.map(()=>({res:'',act:'',nw:''})),judge:'',why:''},persona:{who:'',scene:'',gain:'',pain:''},value:{give:'',gainUp:'',painDown:''},
+ partners:[0,1,2].map(()=>({lack:'',from:'',stage:'',gain:'',burden:''})),both:{client:'',partner:''},approve:'',
+ bmc:{name:'',kp:'',ka:'',kr:'',vp:'',cr:'',ch:'',cs:'',cost:'',rev:''},bmd:{players:[0,1,2,3,4,5].map(()=>({name:'',role:''})),flows:[0,1,2,3,4,5,6,7].map(()=>({from:'',to:'',kind:'',what:''}))},
+ path:{who:'',where:'',res:'',conflict:'',fallback:''},shape:{title:'',concl:'',ask:'',first:'',three:{who:'',start:'',newv:''},cond:[null,null,null,null,null,null,null],condWhy:'',aiDiff:''},excl:{}};}
+function blank(){return {ver:1,big:false,sec:'me_profile',me:{sid:'',name:''},
+ pre:{company:'',purpose:'',purposeWhy:'',j:{},p16:'',ind:'',job:'',nbc:'',c1:false,c2:''},
+ hw:{closed:{a:'',b:'',c:''},bmc:{name:'',kp:'',ka:'',kr:'',vp:'',cr:'',ch:'',cs:'',cost:'',rev:''},oi:{type:'',a:'',b:'',c:''},jr:{v:'',o:'',s:'',x:''},refl:{a:'',b:'',c:''}},
+ sent:{},tsent:{},mine:null,T:blankT(),recs:[],teamAt:'',myRecs:[],draft:{who:'',rx:'',date:'',said:'',does:'',alt:'',star:'',note:'',fam:false}};}
+let S=load();
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&x.ver===1)return mg(blank(),x);}catch(e){}return blank();}
+function mg(a,b){for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object'&&!Array.isArray(a[k]))mg(a[k],b[k]);else a[k]=b[k];}return a;}
+let svT;function save(){clearTimeout(svT);svT=setTimeout(flush,300);}
+function flush(){clearTimeout(svT);try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast('この端末に保存できません。「控え」をファイルに保存してください');}}
+addEventListener('pagehide',flush);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush();});
+const $=id=>document.getElementById(id);
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function get(p){return p.split('.').reduce((o,k)=>o==null?o:o[k],S);}
+function set(p,v){const ks=p.split('.');let o=S;for(let i=0;i<ks.length-1;i++){if(o[ks[i]]==null)o[ks[i]]={};o=o[ks[i]];}o[ks[ks.length-1]]=v;save();}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2600);}
+function fmt(d){if(!d)return '';const x=new Date(d);return isNaN(x)?String(d):`${x.getMonth()+1}/${x.getDate()} ${String(x.getHours()).padStart(2,'0')}:${String(x.getMinutes()).padStart(2,'0')}`;}
+
+/* ---------- 部品 ---------- */
+function ta(p,label,ph,rows){return `${label?`<label class="f">${label}</label>`:''}<textarea data-p="${p}" rows="${rows||2}" placeholder="${esc(ph||'')}">${esc(get(p)||'')}</textarea>`;}
+function tx(p,label,ph){return `${label?`<label class="f">${label}</label>`:''}<input type="text" data-p="${p}" value="${esc(get(p)||'')}" placeholder="${esc(ph||'')}">`;}
+function seg(p,opts){const v=get(p);return `<div class="seg">${opts.map(o=>`<button data-seg="${p}" data-v="${esc(o)}" class="${v===o?'on':''}">${esc(o)}</button>`).join('')}</div>`;}
+
+/* ---------- 通信 ---------- */
+async function post(body){if(!CFG.endpoint)throw new Error('受け口がまだ設定されていません（講師に連絡）');const r=await fetch(CFG.endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});const j=await r.json();if(!j.ok)throw new Error(j.err||'送れませんでした');return j;}
+async function fetchGet(q){if(!CFG.endpoint)throw new Error('受け口がまだ設定されていません（講師に連絡）');const r=await fetch(CFG.endpoint+'?'+new URLSearchParams(q));const j=await r.json();if(!j.ok)throw new Error(j.err||'読めませんでした');return j;}
+async function whoami(){if(!S.me.sid||!S.me.name){toast('はじめに学籍番号と氏名を入れてください');return;}try{const j=await fetchGet({op:'me',sid:S.me.sid,name:S.me.name});S.mine=j.me;save();render();toast(j.me?`チーム${j.me.team}（${j.me.company}）・${j.me.role}`:'まだチームに登録されていません（12/18の編成のあと）');}catch(e){toast(e.message);}}
+async function pullTeam(){if(!S.mine){await whoami();if(!S.mine)return;}try{const j=await fetchGet({op:'team',team:S.mine.team,tkey:S.mine.tkey});
+ if(j.team&&!isRec()){S.T=mg(blankT(),j.team.data);S.teamAt=j.team.at;}else if(j.team&&isRec()&&!S.teamAt){S.T=mg(blankT(),j.team.data);S.teamAt=j.team.at;}
+ S.recs=dedupe(j.recs||[]);save();render();toast('チームの最新を読みました');}catch(e){toast(e.message);}}
+function dedupe(rs){const m={};rs.forEach(r=>{m[r.rid||Math.random()]=r;});return Object.values(m);}
+const TPH={q:'担当者への質問',hyp:'仮説シート（1/7）',bmc:'ビジネスモデルキャンバス（1/21）',final:'最終の提出（2/4）',save:'共有'};
+async function pushTeam(ph){ph=ph||'save';if(!isRec()){toast('チームの画面への入力と提出はチームリーダーだけができます');return;}if(!S.mine){await whoami();if(!S.mine)return;}const T=S.T;const data=JSON.parse(JSON.stringify(T));data.title=T.shape.title;data.summary=T.shape.concl;
+ try{const j=await post({op:'team',sid:S.me.sid,name:S.me.name,team:S.mine.team,phase:ph,data});S.teamAt=j.at;if(ph!=='save')S.tsent[ph]=j.at;save();render();toast(ph==='save'?'メンバーに共有しました':TPH[ph]+'を提出しました（メンバーにも共有されます）');}catch(e){toast(e.message);}}
+function subBtn(ph,label){return isRec()?`<div class="bar"><button class="btn" data-act="tsub" data-ph="${ph}">${label}</button>${S.tsent[ph]?`<span class="note">提出済み ${fmt(S.tsent[ph])}（出し直せます。最後のものが使われます）</span>`:''}</div>`:'';}
+async function uploadFile(){const f=$('pptIn').files[0];if(!f){toast('ファイルを選んでください');return;}if(f.size>20*1024*1024){toast('20MBまでです。画像を圧縮してください');return;}if(!S.mine){await whoami();if(!S.mine)return;}toast('送っています…');
+ const b64=await new Promise((ok,ng)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=ng;r.readAsDataURL(f);});
+ try{const j=await post({op:'file',sid:S.me.sid,name:S.me.name,team:S.mine.team,fname:f.name,mime:f.type||'application/octet-stream',b64});S.tsent.file=j.at;S.tsent.fileName=f.name;save();render();toast('ファイルを提出しました');}catch(e){toast(e.message);}}
+async function submitMe(kind,data){if(!S.me.sid||!S.me.name){toast('はじめに学籍番号と氏名を入れてください');go('me_profile');return;}
+ try{const j=await post({op:'submit',sid:S.me.sid,name:S.me.name,kind,data});S.sent[kind]=j.at;save();render();toast('提出しました');}catch(e){toast(e.message);}}
+async function sendRec(){const d=S.draft;if(!d.who||!d.rx){toast('相手の種類と反応を選んでください');return;}if(!S.mine){await whoami();if(!S.mine)return;}
+ const rid=S.me.sid+'-'+Date.now();const data=Object.assign({},d,{by:S.me.name});
+ try{await post({op:'rec',team:S.mine.team,tkey:S.mine.tkey,sid:S.me.sid,rid,data});S.myRecs.push({rid,at:new Date().toISOString(),data});S.draft={who:'',rx:'',date:'',said:'',does:'',alt:'',star:'',note:'',fam:false};save();render();toast('1件送りました');}catch(e){toast(e.message);}}
+function isRec(){return S.mine&&S.mine.role==='チームリーダー';}
+
+/* ---------- 判定（7つの条件のそろい具合） ---------- */
+function recStats(){const rs=S.recs.filter(r=>!S.T.excl[r.rid]).map(r=>r.data||{});const real=rs.filter(d=>!d.fam&&d.who);const m={};WHO.forEach(w=>{m[w]={};RX.forEach(x=>m[w][x]=0);});real.forEach(d=>{if(m[d.who]&&m[d.who][d.rx]!=null)m[d.who][d.rx]++;});
+ const strong=real.filter(d=>(d.who==='本人'||d.who==='同じ立場')&&RXR[d.rx]>=2).length;let best=null;real.forEach(d=>{if(d.rx&&(!best||RXR[d.rx]>RXR[best.rx]))best=d;});
+ const st={};STAR.forEach(s=>st[s]=real.filter(d=>d.star===s).length);return {n:real.length,fam:rs.length-real.length,m,strong,best,st};}
+function condAuto(){const T=S.T,H=T.hyp,P=T.path,Th=T.shape.three;const rs=recStats();return [
+ T.treas.some(t=>t.w&&t.src),!!(H.who&&H.alt),T.partners.some(p=>p.from&&p.gain),rs.strong>0,!!(H.star&&H.stop&&T.rev.rows[0].res),!!(Th.who&&Th.start&&Th.newv&&T.shape.first),!!(P.who&&P.where&&P.res&&P.conflict)];}
+
+/* ---------- 画面の一覧 ---------- */
+const SEC=[
+ {g:'ひとりの課題',id:'me_profile',t:'はじめに',d:'',r:secProfile,st:()=>S.me.sid&&S.me.name?'done':''},
+ {g:'ひとりの課題',id:'me_pre',t:'事前課題：依頼主の7つの力',d:'12/17（木）23:59',r:secPre,st:()=>S.sent.pre?'sent':(S.pre.company?'done':'')},
+ {g:'ひとりの課題',id:'me_closed',t:'クローズドイノベーションの事例',d:'12/24（木）23:59',r:()=>secHw('closed'),st:()=>S.sent.closed?'sent':''},
+ {g:'ひとりの課題',id:'me_rec',t:'聞き取りを送る（1件ずつ）',d:'年末年始〜1/7',r:secRecSend,st:()=>S.myRecs.length?'done':''},
+ {g:'ひとりの課題',id:'me_oi',t:'オープンイノベーションの事例',d:'1/28（木）23:59',r:()=>secHw('oi'),st:()=>S.sent.oi?'sent':''},
+ {g:'ひとりの課題',id:'me_jr',t:'JR九州の多角化の成功要因',d:'2/10（水）23:59',r:()=>secHw('jr'),st:()=>S.sent.jr?'sent':''},
+ {g:'ひとりの課題',id:'me_refl',t:'振り返り',d:'2/18（木）23:59',r:()=>secHw('refl'),st:()=>S.sent.refl?'sent':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_team',t:'チームと依頼主',d:'第3回 12/18',r:secTeam,st:()=>S.mine?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_interview',t:'担当者への聞き取り',d:'第3回 12/18',r:secInterview,st:()=>S.tsent.q?'sent':(S.T.interview.who?'done':'')},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_find',t:'見つける→つなぐ／AIだけの案',d:'第4・5回 12/25',r:secFind,st:()=>S.T.cell?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_hyp',t:'仮説シート',d:'第5回→1/7（木）',r:secHyp,st:()=>S.tsent.hyp?'sent':(S.T.hyp.star&&S.T.hyp.stop?'done':'')},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_recs',t:'聞き取りの記録（集まったもの）',d:'年末年始→1/7（木）',r:secRecs,st:()=>S.recs.length?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_mid',t:'中間確認',d:'第6・7回 1/8',r:secMid,st:()=>S.T.mid.path?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_rework',t:'作り直す（ペルソナ×提供価値）',d:'第8・9回 1/22',r:secRework,st:()=>S.T.rev.judge?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_bm',t:'ビジネスモデル（キャンバス・図）',d:'キャンバスは1/21（木）23:59',r:secBm,st:()=>S.tsent.bmc?'sent':(S.T.bmc.vp?'done':'')},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_partner',t:'組む',d:'第10・11回 1/29',r:secPartner,st:()=>S.T.partners.some(p=>p.gain)?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_path',t:'社内で通す道（条件7）',d:'第3回→2/4',r:secPath,st:()=>S.T.path.who&&S.T.path.where?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_shape',t:'形にする（エグゼクティブサマリー）',d:'2/4（木）23:59',r:secShape,st:()=>S.T.shape.concl?'done':''},
+ {g:'チームの作業（チームリーダーが入力・全員が見る）',id:'t_ppt',t:'発表資料（PPT）と提出',d:'2/4（木）23:59',r:secPpt,st:()=>S.tsent.final&&S.tsent.file?'sent':(S.tsent.final||S.tsent.file?'done':'')}
+];
+function go(id){S.sec=id;save();render();scrollTo(0,0);}
+
+/* ---------- 描画 ---------- */
+function render(){document.documentElement.classList.toggle('big',!!S.big);
+ if(location.hash==='#k'){$('app').innerHTML=mobile();return;}
+ const sec=SEC.find(s=>s.id===S.sec)||SEC[0];const ca=condAuto();let g='';
+ const nav=SEC.map(s=>{const h=s.g!==g?`<div class="grp">${s.g}</div>`:'';g=s.g;const st=s.st();return h+`<button class="it ${s.id===sec.id?'on':''}" data-go="${s.id}"><span>${s.t}<small>${s.d}</small></span><span class="st ${st}">${st==='sent'?'提出済み':st==='done'?'記入中':'—'}</span></button>`;}).join('');
+ const team=sec.id.startsWith('t_');
+ $('app').innerHTML=`<header><span class="brand">CE特論 ワークベンチ</span><span class="who">${S.me.name?esc(S.me.name):'（氏名未入力）'}${S.mine?`｜チーム${esc(S.mine.team)}・${esc(S.mine.company||'')}・${esc(S.mine.role)}`:''}</span>
+ <span class="conds"><span class="l">依頼主の7つの条件</span>${ca.map((v,i)=>`<span class="cd ${v?'on':''}" title="${esc(COND[i])}">${i+1}</span>`).join('')}</span>
+ <button class="hbtn" data-act="pull">チームの最新を読む</button>${isRec()?`<button class="hbtn p" data-act="push" title="いまの入力をメンバーに共有します（提出は各画面のボタン）">メンバーに共有</button>`:''}<button class="hbtn" data-act="menu">控え・文字</button></header>
+ <div class="wrap"><nav class="side">${nav}<p class="note" style="margin:16px 8px">画面の版：${esc(CFG.version)}${CFG.endpoint?'':'<br><span class="warn">受け口が未設定（提出はできません）</span>'}</p></nav>
+ <main><h1>${sec.t}</h1><div class="meta">${sec.d?`締切・回：<b>${sec.d}</b>　`:''}${team&&S.teamAt?`チームの最新：${fmt(S.teamAt)}`:''}</div>
+ ${team&&!S.mine?`<div class="ro">12/18のチーム編成のあと使えます。<button class="btn g" data-act="whoami">自分のチームを確かめる</button></div>`:''}
+ ${team&&S.mine&&!isRec()&&sec.id!=='t_team'?`<div class="ro">入力と提出はチームリーダー（チームで1人）だけです。あなたの画面は「チームの最新を読む」で更新されます。聞き取りは左の「聞き取りを送る」から。</div>`:''}
+ <fieldset ${team&&(!isRec()&&sec.id!=='t_team')?'disabled':''}>${sec.r()}</fieldset></main></div>`;}
+
+function secProfile(){return `<div class="grid2"><div class="box">${tx('me.sid','学籍番号','例：2XXXXXXX')}${tx('me.name','氏名（フルネーム）','')}
+ <div class="bar"><button class="btn g" data-act="whoami">自分のチームを確かめる（12/18以降）</button></div></div>
+ <div class="box soft"><h3>このワークベンチで</h3><ul class="note" style="margin:0;padding-left:18px"><li>課題の提出はここだけで済みます（Moodleへの提出は不要）</li><li>入力はこの端末に自動で保存。「提出」で講師に届きます</li><li>12/18以降：チームの作業はチームリーダーが入力し、全員が「チームの最新を読む」で見ます</li><li>年末年始の聞き取りは、聞いた人がスマホから1件ずつ送ります（左の「聞き取りを送る」。スマホ用の画面：このURLの末尾に <b>#k</b>）</li><li>上の 1〜7 は依頼主の7つの条件。入力から自動でそろい具合を示します</li></ul></div></div>
+ <div class="box" style="margin-top:14px"><h3>記録の扱い</h3><p class="note" style="margin:0">提出は講師が管理し、成績確定（2月末）の後に消して、名前のない集計値だけを残します。依頼主の情報は講義の外で話さない・書かない、SNSや生成AIのサービスに入力しないでください。</p></div>`;}
+
+function secPre(){const P=S.pre;return `<div class="grid2"><div class="box"><h3>1. 依頼主を選ぶ</h3>${seg('pre.company',COMP)}
+ ${ta('pre.purpose','2. その会社の新規事業責任者として、3〜5年後に新規事業で実現したいこと（新規事業のパーパス）','',2)}${ta('pre.purposeWhy','その理由','',2)}</div>
+ <div class="box soft"><h3>判定の決まり</h3><p class="note" style="margin:0"><b>◎ 外に出せる強み</b>：渡す相手がいま使っている代わりの手段と比べて上回る。出所（どこで見たか・誰が言ったか）を1行<br><b>○ 足りている</b>／<b>△ 足りない</b>：他社と比べず自社の困りで判断<br><b>？ まだ分からない</b>：減点しない。「？」を「○」にしない<br>目安30分。公開情報で調べてよい。AIの文章をそのまま貼らない</p></div></div>
+ <h3 style="margin:16px 0 6px">3. 7つの力を判定する</h3><table class="t"><tr><th style="width:12%">7つの力</th><th style="width:12%">呼び名</th><th style="width:26%">問い（依頼主で読むとき）</th><th class="c" style="width:16%">判定</th><th>比べた相手・出所（1行）</th></tr>
+ ${Q7.map(q=>{if(!P.j[q.id])P.j[q.id]={v:'',src:''};return `<tr><td>${q.f}</td><td>${q.k}</td><td>${q.q}</td><td class="c">${seg('pre.j.'+q.id+'.v',SYM)}</td><td><textarea data-p="pre.j.${q.id}.src" rows="1">${esc(P.j[q.id].src)}</textarea></td></tr>`;}).join('')}</table>
+ <div class="grid3" style="margin-top:14px"><div class="box"><h3>4. 16Personalitiesのタイプ</h3>${tx('pre.p16','','例：ENFP（広報運動家）')}<p class="note">チーム編成のバランスにだけ使い、資料や記録には残しません</p></div>
+ <div class="box"><h3>5. 業界・職種</h3>${tx('pre.ind','業界','')}${tx('pre.job','職種','')}</div>
+ <div class="box"><h3>6. 九大NBC（2026年10〜11月）</h3>${seg('pre.nbc',['受講した','受講していない'])}<p class="note">集計を分けるためだけに使います</p></div></div>
+ <div class="grid2" style="margin-top:14px"><div class="box"><h3>同意①（必須）依頼主の社内情報の守秘</h3><p class="note">第3回の聞き取りと、その後の講義で知った依頼主の社内の情報を、講義の外で話したり書いたりしません。SNSや生成AIのサービスに入力しません。</p>${seg('pre.c1',['同意する'])}</div>
+ <div class="box"><h3>同意②（任意）判定の集計への利用</h3><p class="note">事前課題の判定を、名前を外した集計値として講義の方法の改善に使います。同意しなくても成績には影響しません。</p>${seg('pre.c2',['同意する','同意しない'])}</div></div>
+ <div class="bar"><button class="btn" data-act="sub-pre">事前課題を提出</button>${S.sent.pre?`<span class="note">提出済み ${fmt(S.sent.pre)}（何度でも出し直せます。最後のものが使われます）</span>`:''}</div>`;}
+const HW={closed:{a:'自社・所属先のクローズドイノベーション制度の内容',b:'成功している点',c:'課題点（自社に制度がなければ書籍等から）'},oi:{a:'自社・所属先のオープンイノベーション制度の内容',b:'成功している点',c:'課題点'},jr:{v:'① 経営トップのコミットメント（ビジョン）',o:'② 組織メカニズム（組織）',s:'③ イノベーションプロセスの構築（制度）',x:'④ その他（気づき・疑問）'},refl:{a:'① 講義にて学んだこと',b:'② 本郷さんへのメッセージ',c:'あわせて：社外の反応と社内の決定、どちらで案が変わったか（1行）'}};
+function secHw(k){const f=HW[k];return `${k==='jr'?'<p class="note">JR九州が国鉄民営化後に多角化によって上場に至った成功要因を、3つの視点で考察する（仮説でよい）。課題シートはゲスト講師に事前共有します。</p>':''}${k==='refl'?'<p class="note">本郷さんへの礼状に添えるもので、成績とは関係ありません。</p>':''}${k==='oi'?`<label class="f">類型</label>${seg('hw.oi.type',['インバウンド型','アウトバウンド型','カップルド型'])}`:''}
+ <div class="${Object.keys(f).length>3?'grid2':'grid3'}">${Object.keys(f).map(x=>`<div class="box">${ta('hw.'+k+'.'+x,f[x],'',6)}</div>`).join('')}</div>
+ <div class="bar"><button class="btn" data-act="sub-${k}">提出</button>${S.sent[k]?`<span class="note">提出済み ${fmt(S.sent[k])}</span>`:''}</div>`;}
+function bmcGrid(b){return `${tx(b+'name','事業名','')}
+ <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:auto auto auto;gap:8px;margin-top:10px">
+ <div class="box" style="grid-row:span 2">${ta(b+'kp','パートナー','',8)}</div><div class="box">${ta(b+'ka','主要活動','',3)}</div><div class="box" style="grid-row:span 2">${ta(b+'vp','価値提案','',8)}</div><div class="box">${ta(b+'cr','顧客との関係','',3)}</div><div class="box" style="grid-row:span 2">${ta(b+'cs','顧客セグメント','',8)}</div>
+ <div class="box">${ta(b+'kr','リソース','',3)}</div><div class="box">${ta(b+'ch','チャネル','',3)}</div>
+ <div class="box" style="grid-column:span 2">${ta(b+'cost','コスト構造','',2)}</div><div class="box" style="grid-column:span 3">${ta(b+'rev','収益の流れ','',2)}</div></div>`;}
+function secBmc(){return `<p class="note">チームで選んだ、聞き取りの結果で直した案を1つ。各自で記入して提出します。</p>${bmcGrid('hw.bmc.')}
+ <div class="bar"><button class="btn" data-act="sub-bmc">提出</button>${S.sent.bmc?`<span class="note">提出済み ${fmt(S.sent.bmc)}</span>`:''}</div>`;}
+function recForm(){return `<label class="f">相手の種類</label>${seg('draft.who',WHO)}<label class="f">反応（いちばん強いもの）</label>${seg('draft.rx',RX)}
+ <label class="f" style="display:flex;gap:8px;align-items:center"><input type="checkbox" data-chk="draft.fam" ${S.draft.fam?'checked':''}> 家族・友人（練習。数えない）</label>
+ ${tx('draft.date','日付・場所','例：12/28 博多駅')}${ta('draft.said','相手が言ったこと','',2)}${ta('draft.does','相手が実際にしていること','',2)}${ta('draft.alt','いまの代わりの手段（いくら・どれだけ手間）','',2)}
+ <label class="f">★はどうだった？</label>${seg('draft.star',STAR)}${ta('draft.note','相手の乗り気と気がかり（任意）','',1)}`;}
+function secRecSend(){return `<div class="grid2"><div class="box">${recForm()}<div class="bar"><button class="btn" data-act="sendrec">この1件を送る</button></div></div>
+ <div class="box soft"><h3>数え方</h3><p class="note" style="margin:0">1対1で、チームで3人以上（同じ人は1人）。最初に★を確かめる。「いいですね」「あったら使う」は「言った」。<b>動いた</b>＝時間を取って見せた・紹介した・試した／<b>対価を出した</b>＝払った・払うと約束した／<b>続けた</b>＝繰り返し使っている。案を売り込まず、いまの間に合わせ方とかけているお金・手間を聞く。</p>
+ <h3 style="margin-top:12px">送ったもの（${S.myRecs.length}件）</h3>${S.myRecs.map(r=>`<div class="note">${fmt(r.at)}　${esc(r.data.who)}／${esc(r.data.rx)}　${esc((r.data.said||'').slice(0,30))}</div>`).join('')||'<p class="note">まだありません</p>'}
+ <p class="note">スマホでは、このページのURLの末尾に <b>#k</b> を付けて開くと、送るだけの画面になります。</p></div></div>`;}
+function secTeam(){const m=S.mine;if(!m)return `<p class="note">12/18のチーム編成のあと、「自分のチームを確かめる」を押してください。</p>`;
+ return `<div class="grid3"><div class="box"><h3>チーム</h3><div style="font-size:2em;font-weight:800;color:var(--ac)">${esc(m.team)}</div><p class="note">依頼主：${esc(m.company)}</p></div>
+ <div class="box"><h3>メンバー</h3>${(m.members||[]).map(n=>`<div>${esc(n)}</div>`).join('')}<p class="note">あなたの役割：<b>${esc(m.role)}</b></p></div>
+ <div class="box"><h3>チームの合言葉</h3><div style="font-size:1.4em;font-weight:800;letter-spacing:.1em">${esc(m.tkey)}</div><p class="note">聞き取りを送るとき・チームの最新を読むときに使います（自動で入ります）。チームの外に教えないでください。</p></div></div>
+ <p class="note">チームリーダーは12/18にチームで決めます。決まったら講師がボードで登録を直すので、全員「登録を読み直す」を押してください。</p><div class="bar"><button class="btn g" data-act="whoami">登録を読み直す</button><button class="btn g" data-act="pull">チームの最新を読む</button></div>`;}
+function secInterview(){const p='T.interview.';return `<div class="grid2"><div class="box"><h3>前日までに講師へ送る質問（チームで1〜2問）</h3>${ta(p+'q1','質問1','公開情報で分かることは聞かない',2)}${ta(p+'q2','質問2','',2)}<p class="note">前日（12/17）までに下のボタンで講師に送ります。答えられないことは答えなくてよい、と最初に伝えます。</p>${subBtn('q','質問を講師に送る')}</div>
+ <div class="box soft"><h3>進め方（各社30分）</h3><p class="note" style="margin:0">冒頭5分：担当者から「新規事業が社内でどう進み、どこで決まるか」。残りの時間：その会社を選んだチームから、チームの順に質問する。聞いた内容は守秘（同意①）。</p></div></div>
+ <h3 style="margin:16px 0 6px">聞いたこと（相手の言葉のまま）</h3><div class="grid2"><div class="box">${ta(p+'qa','7つの力の「？」への答え','',4)}</div><div class="box">${ta(p+'who','最初の一歩を誰が決めるか','',2)}${ta(p+'where','どの場で通すか','',2)}</div>
+ <div class="box">${ta(p+'res','借りられそうな社内の資源（人・予算・設備・顧客との接点）','',3)}</div><div class="box">${ta(p+'conflict','既存の事業とぶつかる点・助け合える点','',3)}</div></div>`;}
+function secFind(){const T=S.T;const tr=T.treas.map((t,i)=>({i,...t})).filter(t=>t.w);const pb=T.troubles.map((p,j)=>({j,p})).filter(x=>x.p);const c=T.cell;
+ return `<div class="grid2"><div class="box"><h3>宝のひと言（チームの◎を3〜5個に）</h3><table class="t"><tr><th style="width:44%">具体的なひと言</th><th style="width:22%">7つの力</th><th>出所</th></tr>${T.treas.map((t,i)=>`<tr><td><textarea data-p="T.treas.${i}.w" rows="1" placeholder="例：平日昼の〇〇駅の空きスペース">${esc(t.w)}</textarea></td><td><select data-p="T.treas.${i}.q"><option value=""></option>${Q7.map(q=>`<option ${t.q===q.f?'selected':''}>${q.f}</option>`).join('')}</select></td><td><textarea data-p="T.treas.${i}.src" rows="1">${esc(t.src)}</textarea></td></tr>`).join('')}</table></div>
+ <div class="box"><h3>困っている相手の困りごと（場面で3つ）</h3>${T.troubles.map((p,j)=>`<textarea data-p="T.troubles.${j}" rows="2" placeholder="〇〇のときに、△△で困っている□□の立場の人" style="margin-bottom:6px">${esc(p)}</textarea>`).join('')}</div></div>
+ <h3 style="margin:16px 0 6px">総当たり：強み × 困りごと（全部のマスを見てから選ぶ）</h3>${tr.length&&pb.length?`<div style="display:grid;grid-template-columns:220px repeat(${pb.length},minmax(0,1fr));gap:6px"><div></div>${pb.map(x=>`<div class="note"><b>困りごと${x.j+1}</b> ${esc(x.p)}</div>`).join('')}${tr.map(t=>`<div class="note"><b>宝${t.i+1}</b> ${esc(t.w)}</div>${pb.map(x=>`<button class="cell ${c&&c[0]===t.i&&c[1]===x.j?'on':''}" data-cell="${t.i},${x.j}">${c&&c[0]===t.i&&c[1]===x.j?'<b>選んだ</b>':'<span class="note">選ぶ</span>'}</button>`).join('')}`).join('')}</div>`:'<p class="note">宝と困りごとを書くと、ここにマスが並びます。</p>'}
+ ${tx('T.far','「遠いマス」で候補に残すもの','')}
+ <h3 style="margin:16px 0 6px">AIだけの案（AIを使うのはここ1か所。10分。あとから書き換えない）</h3><div class="grid2"><div class="box soft" style="white-space:pre-wrap;font-size:.9em">${esc(aiPrompt())}</div><div class="box">${ta('T.ai.ans','AIの答え（そのまま貼る）','',6)}${ta('T.shape.aiDiff','AIだけの案とチームの案の違い（1行）→「確かめること」の候補','',2)}</div></div>
+ <div class="bar"><button class="btn g" data-act="copyai">指示文をコピー</button><span class="note">AIの答えは聞いた事実ではありません。根拠欄に書かない。依頼主の社内の情報はAIに入れない。</span></div>`;}
+function aiPrompt(){const T=S.T,c=T.cell;const t=c?T.treas[c[0]]:null,p=c?T.troubles[c[1]]:null;return `次の「困りごと」に、${S.mine?S.mine.company:'依頼主'}の次の「強み」を使った新しい事業を1つ提案してください。誰に、何を、どう届け、誰がいくら払うかを5行で。\n困りごと：${p||'（総当たりで選んだ困りごと）'}\n強み：${t&&t.w?t.w:'（宝のひと言）'}`;}
+function secHyp(){const p='T.hyp.';const rows=[['who','困っている相手','名前か、特定できる立場で（複数可）','「観光客」「高齢者」は相手ではない'],['scene','困りごとの場面','いつ・どこで・何に困っているか','分類の言葉で終わらせない'],['alt','いまの代わりの手段','いま何で間に合わせているか','分からなければ「未確認」'],['altCost','代わりにかけているもの','いくら・どれだけ手間をかけているか',''],['give','渡すもの','何を渡すか（商品・サービス・場・仕組み）','「プラットフォーム」だけで終わらせない'],['pay','相手が払うもの','お金・時間・手間・情報のどれを、どれだけ','払う人と使う人が違うときは両方'],['p1','組む相手①','強みを渡す相手','第10・11回で見直す'],['p2','組む相手②','足りないものを埋めてくれる相手',''],['star','いちばん確かでない条件（★）','これが外れたら案が成り立たない条件','聞き取りの最初に確かめる'],['stop','やめる条件','聞いた結果がこうなら、やめる（聞く前に決める）','「いいですね」だけなら続けない、など']];
+ return `<p class="note">チームで1枚。使う強みは「見つける→つなぐ」で選んだマス：<b>${esc(chosenText())}</b></p><table class="t"><tr><th style="width:18%">欄</th><th style="width:22%">書くこと</th><th>記入</th><th style="width:20%">例・注意</th></tr>${rows.map(r=>`<tr><th>${r[1]}</th><td class="note">${r[2]}</td><td><textarea data-p="${p+r[0]}" rows="2">${esc(S.T.hyp[r[0]])}</textarea></td><td class="note">${r[3]}</td></tr>`).join('')}</table>
+ <p class="note">聞き取りの記録はメンバーが送ったものが自動で集まります。3人に届かなくても提出し、理由を中間確認で話します。</p>${subBtn('hyp','仮説シートを提出（1/7）')}`;}
+function chosenText(){const T=S.T,c=T.cell;if(!c)return '未選択';return `${T.treas[c[0]].w} × ${T.troubles[c[1]]}`;}
+function secRecs(){const rs=recStats();return `<div class="kpi"><div>聞いた人 ${rs.n}人（練習 ${rs.fam}人は別）</div><div>本人・同じ立場から「動いた」以上 ${rs.strong}件</div><div>いちばん強い反応：${rs.best?esc(rs.best.rx)+'（'+esc(rs.best.who)+'）':'まだない'}</div><div>★ 合っていた ${rs.st['合っていた']}／外れた ${rs.st['外れた']}／まだ分からない ${rs.st['まだ分からない']}</div></div>
+ <div class="grid2"><div class="box"><h3>相手の種類 × 反応</h3><table class="t"><tr><th></th>${RX.map(x=>`<th class="c">${x}</th>`).join('')}</tr>${WHO.map(w=>`<tr><th>${w}</th>${RX.map(x=>`<td class="c">${rs.m[w][x]}</td>`).join('')}</tr>`).join('')}</table></div>
+ <div class="box soft"><p class="note" style="margin:0">メンバーがスマホから送った記録が集まります（「チームの最新を読む」で更新）。チームリーダーは、重複や練習の入れ間違いを「数えない」にできます。</p></div></div>
+ <table class="t" style="margin-top:12px"><tr><th>日付・場所</th><th>種類</th><th>反応</th><th>言ったこと</th><th>実際にしていること</th><th>代わりの手段</th><th>★</th><th>送った人</th><th class="c">数える</th></tr>
+ ${S.recs.map(r=>{const d=r.data||{};const ex=!!S.T.excl[r.rid];return `<tr style="${ex?'opacity:.45':''}"><td>${esc(d.date)}</td><td>${esc(d.who)}${d.fam?'（練習）':''}</td><td>${esc(d.rx)}</td><td>${esc(d.said)}</td><td>${esc(d.does)}</td><td>${esc(d.alt)}</td><td>${esc(d.star)}</td><td>${esc(d.by)}</td><td class="c"><input type="checkbox" data-ex="${esc(r.rid)}" ${ex?'':'checked'}></td></tr>`;}).join('')||'<tr><td colspan="9" class="note">まだ届いていません</td></tr>'}</table>`;}
+function secMid(){const rs=recStats();const H=S.T.hyp;return `<p class="note">各チーム3分で報告し、講師と受講生から問いを1つずつ受ける。案の良し悪しは競わない。この画面はボードからも投影されます。</p>
+ <div class="grid2"><div class="box"><h3>聞き取りの結果</h3><div class="kpi"><div>聞いた人 ${rs.n}人</div><div>「動いた」以上（本人・同じ立場）${rs.strong}件</div></div><table class="t"><tr><th></th>${RX.map(x=>`<th class="c">${x}</th>`).join('')}</tr>${WHO.map(w=>`<tr><th>${w}</th>${RX.map(x=>`<td class="c">${rs.m[w][x]}</td>`).join('')}</tr>`).join('')}</table></div>
+ <div class="box"><h3>★はどうだったか</h3><p>${esc(H.star)||'<span class="note">★が未記入</span>'}</p><p class="note">合っていた ${rs.st['合っていた']}／外れた ${rs.st['外れた']}／まだ分からない ${rs.st['まだ分からない']}</p>${ta('T.mid.path','社内で通す道（仮説）：誰が決め、どの場で通し、社内の何を借りるか','',3)}${ta('T.mid.next','人数が足りなければ、第8回までに誰に聞くか','',2)}</div></div>`;}
+function secRework(){const T=S.T,H=T.hyp,I=T.interview;const before=[H.star,[H.who,H.scene].filter(Boolean).join('：'),H.give,H.pay,I.res||I.conflict];
+ return `<table class="t"><tr><th style="width:18%">仮説シートの欄</th><th style="width:20%">聞く前（自動）</th><th style="width:20%">聞いた結果</th><th style="width:20%">どうするか</th><th>新しい案（前の案は消さない）</th></tr>
+ ${REVROWS.map((r,i)=>`<tr><th>${r}</th><td class="note">${esc(before[i])||'—'}</td><td>${seg('T.rev.rows.'+i+'.res',STAR)}</td><td>${seg('T.rev.rows.'+i+'.act',['直す','変えない','新しく借りる'])}</td><td><textarea data-p="T.rev.rows.${i}.nw" rows="2">${esc(T.rev.rows[i].nw)}</textarea></td></tr>`).join('')}</table>
+ <div class="grid2" style="margin-top:12px"><div class="box"><h3>判断</h3>${seg('T.rev.judge',['続ける','直す','やめる'])}${ta('T.rev.why','理由（どの反応・どの条件に当たったか）','',2)}<p class="note">続ける：★が合っていて「動いた」以上がある／直す：★が外れた、または「動いた」以上がない／やめる：やめる条件に当たった（やめた理由と次に確かめることを発表）</p></div>
+ <div class="box soft"><p class="note" style="margin:0">決めたあとで、下のペルソナ×提供価値と、各自のビジネスモデルキャンバス（1/21）を書き直す。</p></div></div>
+ <h3 style="margin:16px 0 6px">ターゲット顧客（ペルソナ）× 提供価値</h3><div class="grid2"><div class="box">${ta('T.persona.who','ペルソナ（立場・状況。聞いた人の言葉から）','',2)}${ta('T.persona.scene','困る場面','',2)}${ta('T.persona.gain','嬉しいこと（ゲイン）','',2)}${ta('T.persona.pain','嫌なこと（ペイン）','',2)}</div>
+ <div class="box">${ta('T.value.give','提供価値（商品・サービス）','',2)}${ta('T.value.gainUp','嬉しいことを増やす要因','',2)}${ta('T.value.painDown','嫌なことを減らす要因','',2)}</div></div>`;}
+const NODES=()=>['依頼主（自社）'].concat(S.T.bmd.players.map(p=>p.name).filter(Boolean));
+function secBm(){const D=S.T.bmd;const nodes=NODES();return `<h3 style="margin:0 0 6px">チームのビジネスモデルキャンバス（チームで1枚）</h3><p class="note" style="margin:0 0 8px">チームで選んだ、聞き取りの結果で直した案を1つ。1/21（木）23:59までにチームリーダーが提出します。第8〜11回で作り直したら、出し直します。</p>${bmcGrid('T.bmc.')}${subBtn('bmc','ビジネスモデルキャンバスを提出（1/21）')}
+ <h3 style="margin:18px 0 6px">ビジネスモデル図（誰と誰の間で、お金・情報・モノ／サービスがどう流れるか）</h3>
+ <div class="grid2"><div><table class="t"><tr><th style="width:42%">登場する相手（最大6）</th><th>役割</th></tr>${D.players.map((p,i)=>`<tr><td><input type="text" data-p="T.bmd.players.${i}.name" value="${esc(p.name)}" placeholder="${['顧客','組む相手','利用者','自治体','金融機関','サプライヤー'][i]}"></td><td><input type="text" data-p="T.bmd.players.${i}.role" value="${esc(p.role)}"></td></tr>`).join('')}</table>
+ <table class="t" style="margin-top:10px"><tr><th>から</th><th>へ</th><th>種類</th><th>中身</th></tr>${D.flows.map((f,i)=>`<tr><td><select data-p="T.bmd.flows.${i}.from"><option value=""></option>${nodes.map(n=>`<option ${f.from===n?'selected':''}>${esc(n)}</option>`).join('')}</select></td><td><select data-p="T.bmd.flows.${i}.to"><option value=""></option>${nodes.map(n=>`<option ${f.to===n?'selected':''}>${esc(n)}</option>`).join('')}</select></td><td><select data-p="T.bmd.flows.${i}.kind"><option value=""></option>${['お金','情報','モノ・サービス'].map(k=>`<option ${f.kind===k?'selected':''}>${k}</option>`).join('')}</select></td><td><input type="text" data-p="T.bmd.flows.${i}.what" value="${esc(f.what)}"></td></tr>`).join('')}</table></div>
+ <div class="box soft">${bmdSvg()}<p class="note">PPTでも同じ配置で描きます。矢印が重なるときは「中身」を短くします。</p></div></div>`;}
+function bmdGeom(W,H,nw,nh,cw){const nodes=NODES();const P={};const n=nodes.length-1;nodes.forEach((nm,i)=>{if(i===0){P[nm]={x:W/2,y:H/2,w:cw,h:nh};return;}const a=-Math.PI/2+(i-1)*2*Math.PI/Math.max(n,1)+(n===2?Math.PI/2:0);P[nm]={x:W/2+Math.cos(a)*(W/2-nw/2-nh*0.1),y:H/2+Math.sin(a)*(H/2-nh/2-nh*0.1),w:nw,h:nh};});
+ const clip=(c,dx,dy)=>{const sx=dx?(c.w/2)/Math.abs(dx):1e9,sy=dy?(c.h/2)/Math.abs(dy):1e9;const t=Math.min(sx,sy);return [c.x+dx*t,c.y+dy*t];};
+ const E=S.T.bmd.flows.filter(f=>f.from&&f.to&&P[f.from]&&P[f.to]&&f.from!==f.to).map(f=>{const a=P[f.from],b=P[f.to];let dx=b.x-a.x,dy=b.y-a.y;const L=Math.hypot(dx,dy)||1;const ux=dx/L,uy=dy/L;const px=-uy,py=ux;const off=nh*0.18;
+  const A0={x:a.x+px*off,y:a.y+py*off,w:a.w-2*Math.abs(px*off),h:a.h-2*Math.abs(py*off)},B0={x:b.x+px*off,y:b.y+py*off,w:b.w-2*Math.abs(px*off),h:b.h-2*Math.abs(py*off)};
+  const s0=clip(A0,ux,uy),e0=clip(B0,-ux,-uy);const g=nh*0.12;return {f,x1:s0[0]+ux*g,y1:s0[1]+uy*g,x2:e0[0]-ux*g,y2:e0[1]-uy*g,lx:(s0[0]+e0[0])/2+px*nh*0.42,ly:(s0[1]+e0[1])/2+py*nh*0.42};});
+ return {nodes,P,E};}
+const KCOL={'お金':'#750145','情報':'#2f6f9f','モノ・サービス':'#1f7a4d'};
+function bmdSvg(){const W=600,H=400,G=bmdGeom(W,H,130,42,160);let lines='',boxes='';
+ G.E.forEach(e=>{const k=['お金','情報','モノ・サービス'].indexOf(e.f.kind);const c=KCOL[e.f.kind]||'#59636e';lines+=`<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="${c}" stroke-width="2" marker-end="url(#ar${k+1})"/><text x="${e.lx}" y="${e.ly+4}" font-size="12" text-anchor="middle" fill="${c}" paint-order="stroke" stroke="#f6f7f9" stroke-width="4">${esc((e.f.what||e.f.kind).slice(0,14))}</text>`;});
+ G.nodes.forEach((n,i)=>{const p=G.P[n];boxes+=`<rect x="${p.x-p.w/2}" y="${p.y-p.h/2}" width="${p.w}" height="${p.h}" rx="8" fill="${i===0?'#750145':'#fff'}" stroke="#750145" stroke-width="1.5"/><text x="${p.x}" y="${p.y+5}" font-size="13" font-weight="700" text-anchor="middle" fill="${i===0?'#fff':'#1f2328'}">${esc(n.slice(0,11))}</text>`;});
+ const mk=['#59636e','#750145','#2f6f9f','#1f7a4d'].map((c,i)=>`<marker id="ar${i}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="${c}"/></marker>`).join('');
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="ビジネスモデル図"><defs>${mk}</defs>${lines}${boxes}</svg><div class="note"><span style="color:#750145">■</span> お金　<span style="color:#2f6f9f">■</span> 情報　<span style="color:#1f7a4d">■</span> モノ・サービス</div>`;}
+function secPartner(){const T=S.T;return `<p class="note">依頼主が持っていないもの（人・技・場・顧客・お金・信用など）を先に書き出し、誰から借りるかを決める。「相手に増えるもの」は顧客の得とは別に、相手が社内の会議で説明できる言葉で。</p>
+ <table class="t"><tr><th>足りないもの</th><th>誰から借りるか</th><th style="width:22%">連携の段</th><th>相手に増えるもの（相手の側の言葉で）</th><th>相手の負担</th></tr>${T.partners.map((p,i)=>`<tr><td><textarea data-p="T.partners.${i}.lack" rows="2">${esc(p.lack)}</textarea></td><td><textarea data-p="T.partners.${i}.from" rows="2">${esc(p.from)}</textarea></td><td>${seg('T.partners.'+i+'.stage',['社内','なじみの相手','新しい相手'])}</td><td><textarea data-p="T.partners.${i}.gain" rows="2">${esc(p.gain)}</textarea></td><td><textarea data-p="T.partners.${i}.burden" rows="2">${esc(p.burden)}</textarea></td></tr>`).join('')}</table>
+ <div class="bar"><button class="btn g" data-act="addpartner">行を足す</button></div>
+ <div class="grid3"><div class="box">${ta('T.both.client','依頼主（自社）に増えるもの','',3)}</div><div class="box">${ta('T.both.partner','組む相手に増えるもの','',3)}</div><div class="box">${ta('T.approve','社外の相手と組むことを、社内でどう承認してもらうか','',3)}</div></div>`;}
+function secPath(){const p='T.path.',I=S.T.interview;return `<div class="grid2"><div class="box">${ta(p+'who','最初の一歩を、依頼主の中で誰が決めるか','',2)}${ta(p+'where','どの場で通すか（会議体・決裁）','',2)}${ta(p+'res','借りる社内の資源（人・予算・設備・顧客との接点）','',3)}</div>
+ <div class="box">${ta(p+'conflict','既存の事業とどうぶつかり、どう助け合うか','',3)}${ta(p+'fallback','通らなかったときの代わりの道（1行）','',2)}</div></div>
+ <div class="box soft" style="margin-top:12px"><h3>第3回の聞き取りで聞いたこと</h3><p class="note" style="margin:0">誰が決める：${esc(I.who)||'—'}／どの場：${esc(I.where)||'—'}／資源：${esc(I.res)||'—'}／ぶつかる・助け合う：${esc(I.conflict)||'—'}</p></div>`;}
+function secShape(){const p='T.shape.';const ca=condAuto();return `<div class="grid2"><div class="box">${tx(p+'title','案の名前','')}${ta(p+'concl','結論（決める側に一言で何を提案するか）','',2)}${ta(p+'ask','お願い（何を、いつまでに、どれだけ決めてほしいか）','',2)}${ta(p+'first','最初の一歩（本業を止めず半年以内に）','',2)}</div>
+ <div class="box"><h3>始めるための3つの問い</h3>${ta(p+'three.who','誰が受け取るか','',2)}${ta(p+'three.start','何から始めるか','',2)}${ta(p+'three.newv','何が新しく生まれるか','',2)}</div></div>
+ <h3 style="margin:16px 0 6px">依頼主の7つの条件（自己点検。「自動」は入力から見たそろい具合）</h3><table class="t"><tr><th>#</th><th>条件</th><th class="c">自動</th><th class="c" style="width:20%">チームの判断</th></tr>${COND.map((c,i)=>`<tr><td>${i+1}</td><td>${c}</td><td class="c">${ca[i]?'○':'—'}</td><td class="c">${seg('T.shape.cond.'+i,['そろった','足りない'])}</td></tr>`).join('')}</table>${ta(p+'condWhy','足りない条件と、その理由','',2)}`;}
+function secPpt(){return `<div class="grid2"><div class="box"><h3>PowerPointに書き出す</h3><p class="note">入力から下書きを作ります。体裁は講義資料と同じえんじ・白地。受講生が仕上げて発表します（発表6分＋決める側の問い9分）。</p>
+ <ol class="note"><li>表紙</li><li>エグゼクティブサマリー（結論・お願い・最初の一歩・判断の材料）</li><li>届ける相手と聞いたことから作り直した跡</li><li>ターゲット顧客（ペルソナ）× 提供価値</li><li>ビジネスモデルキャンバス</li><li>ビジネスモデル図</li><li>社内で通す道（組む相手と増えるものを含む）</li><li>付録：依頼主の7つの条件／AIだけの案との違い／聞き取りの記録</li></ol>
+ <button class="btn" data-act="ppt">PPTを書き出す</button></div>
+ <div class="box"><h3>提出（2/4 23:59）</h3><p class="note">① 中身：「最終を提出」で、講師と依頼主の判定画面に届きます。② ファイル：仕上げたPPT（またはPDF、20MBまで）をここから送ります。どちらもチームリーダーが行い、出し直せます（最後のものが使われます）。Moodleへの提出は要りません。</p>${subBtn('final','最終を提出（2/4）')}
+ ${isRec()?`<div class="bar"><input type="file" id="pptIn" accept=".pptx,.pdf"><button class="btn" data-act="upload">ファイルを提出</button></div>${S.tsent.file?`<p class="note">提出済み：${esc(S.tsent.fileName||'')}　${fmt(S.tsent.file)}</p>`:''}`:''}</div></div>`;}
+
+/* ---------- PPT ---------- */
+function loadPptx(){return new Promise((ok,ng)=>{if(window.PptxGenJS)return ok();const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js';s.onload=ok;s.onerror=()=>ng(new Error('書き出しの部品を読み込めませんでした（ネットにつながっているか確認）'));document.head.appendChild(s);});}
+async function exportPpt(){try{await loadPptx();}catch(e){toast(e.message);return;}const T=S.T,H=T.hyp,P=T.path,rs=recStats(),m=S.mine||{};const pres=new PptxGenJS();pres.layout='LAYOUT_WIDE';
+ const AC='750145',DK='5D0037',LT='F4E8EF',INK='1F2328',SUB='59636E',F='Yu Gothic';
+ const head=(s,t,n)=>{s.background={color:'FFFFFF'};s.addShape(pres.ShapeType.rect,{x:0,y:7.2,w:13.33,h:0.3,fill:{color:AC},line:{color:AC}});s.addText(t,{x:0.75,y:0.35,w:12.05,h:0.7,fontFace:F,fontSize:26,bold:true,color:INK,isTextBox:true,margin:0});s.addShape(pres.ShapeType.rect,{x:0.5,y:0.38,w:0.08,h:0.62,fill:{color:AC},line:{color:AC}});if(n)s.addText(String(n),{x:12.4,y:7.2,w:0.8,h:0.3,fontSize:10,color:'FFFFFF',align:'right',isTextBox:true});};
+ const box=(s,x,y,w,h,title,body,fill)=>{s.addShape(pres.ShapeType.roundRect,{x,y,w,h,fill:{color:fill||'FFFFFF'},line:{color:'D8DDE3'},rectRadius:0.08});s.addText([{text:title+'\n',options:{bold:true,color:DK,fontSize:14}},{text:body||'（未記入）',options:{color:INK,fontSize:13}}],{x:x+0.15,y:y+0.1,w:w-0.3,h:h-0.2,fontFace:F,valign:'top',isTextBox:true,margin:0});};
+ let s=pres.addSlide();s.background={color:'FFFFFF'};s.addShape(pres.ShapeType.rect,{x:0,y:0,w:13.33,h:7.5,fill:{color:LT},line:{color:LT}});s.addShape(pres.ShapeType.rect,{x:0,y:5.9,w:13.33,h:1.6,fill:{color:AC},line:{color:AC}});
+ s.addText(T.shape.title||'（案の名前）',{x:0.8,y:1.6,w:11.7,h:1.4,fontFace:F,fontSize:40,bold:true,color:DK,isTextBox:true});s.addText(T.shape.concl||'',{x:0.8,y:3.0,w:11.7,h:1.2,fontFace:F,fontSize:20,color:INK,isTextBox:true});
+ s.addText(`${m.company||'依頼主'} 新規事業 社内会議ご提案｜チーム${m.team||''}`,{x:0.8,y:6.1,w:11.7,h:0.5,fontFace:F,fontSize:18,bold:true,color:'FFFFFF',isTextBox:true});s.addText(`${(m.members||[]).join('・')}　2027年2月5日`,{x:0.8,y:6.6,w:11.7,h:0.5,fontFace:F,fontSize:14,color:'FFFFFF',isTextBox:true});
+ s=pres.addSlide();head(s,'エグゼクティブサマリー',2);box(s,0.5,1.3,12.3,1.2,'結論',T.shape.concl,LT);box(s,0.5,2.65,6.05,1.6,'お願い（決めていただきたいこと）',T.shape.ask);box(s,6.75,2.65,6.05,1.6,'最初の一歩（本業を止めず半年以内）',T.shape.first);
+ box(s,0.5,4.4,4,2.6,'誰に・何を',`${H.who}\n${T.value.give||H.give}`);box(s,4.65,4.4,4,2.6,'判断の材料',`聞いた人 ${rs.n}人／「動いた」以上 ${rs.strong}件\nいちばん強い反応：${rs.best?rs.best.rx+'（'+rs.best.who+'）':'—'}\n依頼主の7つの条件：${T.shape.cond.filter(x=>x==='そろった').length}／7`);box(s,8.8,4.4,4,2.6,'始めるための3つの問い',`誰が受け取る：${T.shape.three.who}\n何から始める：${T.shape.three.start}\n何が生まれる：${T.shape.three.newv}`);
+ s=pres.addSlide();head(s,'届ける相手と、聞いたことから作り直した跡',3);const rows=[[{text:'仮説シートの欄',options:{bold:true,fill:{color:LT}}},{text:'聞く前',options:{bold:true,fill:{color:LT}}},{text:'聞いた結果',options:{bold:true,fill:{color:LT}}},{text:'どうしたか',options:{bold:true,fill:{color:LT}}},{text:'新しい案',options:{bold:true,fill:{color:LT}}}]];
+ const bf=[H.star,[H.who,H.scene].filter(Boolean).join('：'),H.give,H.pay,T.interview.res||T.interview.conflict];REVROWS.forEach((r,i)=>{const v=T.rev.rows[i];rows.push([r,bf[i]||'',v.res||'',v.act||'',v.nw||'']);});
+ s.addTable(rows,{x:0.5,y:1.3,w:12.3,colW:[2.2,3,1.6,1.5,4],fontFace:F,fontSize:11,color:INK,border:{type:'solid',pt:0.75,color:'D8DDE3'},valign:'top'});s.addText(`判断：${T.rev.judge||'—'}　${T.rev.why||''}　｜　聞いた人 ${rs.n}人、本人・同じ立場から「動いた」以上 ${rs.strong}件`,{x:0.5,y:6.5,w:12.3,h:0.5,fontFace:F,fontSize:13,color:DK,bold:true,isTextBox:true});
+ s=pres.addSlide();head(s,'ターゲット顧客（ペルソナ）× 提供価値',4);box(s,0.5,1.3,6.05,5.7,'ペルソナ',`${T.persona.who}\n\n場面：${T.persona.scene}\n\n嬉しいこと：${T.persona.gain}\n\n嫌なこと：${T.persona.pain}`);box(s,6.75,1.3,6.05,5.7,'提供価値',`${T.value.give}\n\n嬉しいことを増やす：${T.value.gainUp}\n\n嫌なことを減らす：${T.value.painDown}\n\nいまの代わりの手段：${H.alt}（${H.altCost}）`,LT);
+ const B=T.bmc;s=pres.addSlide();head(s,'ビジネスモデルキャンバス'+(B.name?'｜'+B.name:''),5);const cw=12.3/5;
+ [['パートナー',B.kp,0,1.25,2,4.0],['主要活動',B.ka,1,1.25,1,1.95],['リソース',B.kr,1,3.3,1,1.95],['価値提案',B.vp,2,1.25,1,4.0],['顧客との関係',B.cr,3,1.25,1,1.95],['チャネル',B.ch,3,3.3,1,1.95],['顧客セグメント',B.cs,4,1.25,1,4.0]].forEach(c=>box(s,0.5+c[2]*cw,c[3],cw-0.08,c[5],c[0],c[1],c[0]==='価値提案'?LT:'FFFFFF'));
+ box(s,0.5,5.35,6.1,1.7,'コスト構造',B.cost);box(s,6.7,5.35,6.1,1.7,'収益の流れ',B.rev);
+ s=pres.addSlide();head(s,'ビジネスモデル図',6);const G=bmdGeom(12.3,5.4,2.3,0.7,2.8);const OX=0.5,OY=1.3;const KC={'お金':'750145','情報':'2F6F9F','モノ・サービス':'1F7A4D'};
+ G.E.forEach(e=>{const c=KC[e.f.kind]||'59636E';const x1=OX+e.x1,y1=OY+e.y1,x2=OX+e.x2,y2=OY+e.y2;s.addShape(pres.ShapeType.line,{x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.max(Math.abs(x2-x1),0.01),h:Math.max(Math.abs(y2-y1),0.01),flipH:x2<x1,flipV:y2<y1,line:{color:c,width:2,endArrowType:'triangle'}});
+  s.addText(e.f.what||e.f.kind,{x:OX+e.lx-1.1,y:OY+e.ly-0.17,w:2.2,h:0.34,fontFace:F,fontSize:11,color:c,align:'center',valign:'middle',isTextBox:true,margin:0});});
+ G.nodes.forEach((n,i)=>{const p=G.P[n];s.addShape(pres.ShapeType.roundRect,{x:OX+p.x-p.w/2,y:OY+p.y-p.h/2,w:p.w,h:p.h,fill:{color:i===0?AC:'FFFFFF'},line:{color:AC,width:1.25},rectRadius:0.1});s.addText(n,{x:OX+p.x-p.w/2,y:OY+p.y-p.h/2,w:p.w,h:p.h,fontFace:F,fontSize:13,bold:true,color:i===0?'FFFFFF':INK,align:'center',valign:'middle',isTextBox:true,margin:0});});
+ s.addText([{text:'■ お金　',options:{color:'750145'}},{text:'■ 情報　',options:{color:'2F6F9F'}},{text:'■ モノ・サービス',options:{color:'1F7A4D'}}],{x:0.5,y:6.8,w:6,h:0.3,fontFace:F,fontSize:10,isTextBox:true,margin:0});
+ s=pres.addSlide();head(s,'社内で通す道',7);box(s,0.5,1.3,4,2.7,'誰が決めるか',P.who);box(s,4.65,1.3,4,2.7,'どの場で通すか',P.where);box(s,8.8,1.3,4,2.7,'借りる社内の資源',P.res);box(s,0.5,4.15,6.05,2.85,'既存事業とのぶつかり・助け合い',`${P.conflict}\n\n通らないときの代わりの道：${P.fallback}`);
+ box(s,6.75,4.15,6.05,2.85,'組む相手と、相手に増えるもの',T.partners.filter(p=>p.from).map(p=>`${p.from}（${p.stage||'—'}）：${p.gain}`).join('\n')+(T.both.client?`\n依頼主に増えるもの：${T.both.client}`:''),LT);
+ s=pres.addSlide();head(s,'付録1　依頼主の7つの条件',8);s.addTable([[{text:'#',options:{bold:true,fill:{color:LT}}},{text:'条件',options:{bold:true,fill:{color:LT}}},{text:'チームの判断',options:{bold:true,fill:{color:LT}}}]].concat(COND.map((c,i)=>[String(i+1),c,T.shape.cond[i]||''])),{x:0.5,y:1.3,w:12.3,colW:[0.5,9.8,2],fontFace:F,fontSize:12,color:INK,border:{type:'solid',pt:0.75,color:'D8DDE3'}});s.addText(T.shape.condWhy||'',{x:0.5,y:6.3,w:12.3,h:0.7,fontFace:F,fontSize:12,color:SUB,isTextBox:true});
+ s=pres.addSlide();head(s,'付録2　AIだけの案と最後の案の違い',9);box(s,0.5,1.3,6.05,5.0,'AIだけの案（第5回・そのまま）',(T.ai.ans||'').slice(0,600));box(s,6.75,1.3,6.05,5.0,'最後の案',`${T.shape.concl}\n\n誰に：${H.who}\n何を：${T.value.give||H.give}`,LT);s.addText('違い：'+(T.shape.aiDiff||''),{x:0.5,y:6.4,w:12.3,h:0.6,fontFace:F,fontSize:13,bold:true,color:DK,isTextBox:true});
+ s=pres.addSlide();head(s,'付録3　聞き取りの記録',10);const rr=[[{text:'種類',options:{bold:true,fill:{color:LT}}},{text:'反応',options:{bold:true,fill:{color:LT}}},{text:'言ったこと',options:{bold:true,fill:{color:LT}}},{text:'実際にしていること',options:{bold:true,fill:{color:LT}}},{text:'★',options:{bold:true,fill:{color:LT}}}]];
+ S.recs.filter(r=>!T.excl[r.rid]&&r.data&&!r.data.fam).slice(0,12).forEach(r=>{const d=r.data;rr.push([d.who||'',d.rx||'',(d.said||'').slice(0,60),(d.does||'').slice(0,60),d.star||'']);});s.addTable(rr,{x:0.5,y:1.3,w:12.3,colW:[1.4,1.6,4.2,4.0,1.1],fontFace:F,fontSize:10,color:INK,border:{type:'solid',pt:0.75,color:'D8DDE3'}});
+ const fn=`CE特論_チーム${m.team||''}_${(T.shape.title||'提案').replace(/[\\/:*?"<>|]/g,'')}.pptx`;let blob=await pres.write({outputType:'blob'});if(window.JSZip){const z=await JSZip.loadAsync(blob);const nz=new JSZip();for(const k of Object.keys(z.files)){const f=z.files[k];if(f.dir)continue;nz.file(k,await f.async('uint8array'),{createFolders:false});}blob=await nz.generateAsync({type:'blob',compression:'DEFLATE',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation'});}const x=document.createElement('a');x.href=URL.createObjectURL(blob);x.download=fn;document.body.appendChild(x);x.click();x.remove();toast('PPTを書き出しました');}
+
+/* ---------- スマホ用（#k） ---------- */
+function mobile(){return `<div class="mob"><h1>聞き取りを送る（1件ずつ）</h1><p class="note">${S.mine?`チーム${esc(S.mine.team)}（${esc(S.mine.company)}）・${esc(S.me.name)}`:'はじめに学籍番号と氏名を入れて「チームを確かめる」'}</p>
+ ${S.mine?'':`<div class="box">${tx('me.sid','学籍番号','')}${tx('me.name','氏名','')}<div class="bar"><button class="btn" data-act="whoami">チームを確かめる</button></div></div>`}
+ <div class="box" style="margin-top:10px">${recForm()}<div class="bar"><button class="btn" data-act="sendrec" style="width:100%;padding:14px">この1件を送る</button></div></div><p class="note">送ったもの：${S.myRecs.length}件。PCの画面は、このURLの末尾の #k を消して開きます。</p></div>`;}
+
+/* ---------- 操作 ---------- */
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.p)set(t.dataset.p,t.value);});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.p&&t.dataset.p.startsWith('T.bmd.players')){const y=scrollY;render();scrollTo(0,y);}if(t.dataset.p&&t.tagName==='SELECT'){set(t.dataset.p,t.value);}if(t.dataset.chk){set(t.dataset.chk,t.checked);}if(t.dataset.ex!=null){if(t.checked)delete S.T.excl[t.dataset.ex];else S.T.excl[t.dataset.ex]=true;save();render();}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.go){go(d.go);return;}
+ if(d.seg){const cur=get(d.seg);set(d.seg,cur===d.v?'':d.v);const y=scrollY;render();scrollTo(0,y);return;}
+ if(d.cell){S.T.cell=d.cell.split(',').map(Number);save();const y=scrollY;render();scrollTo(0,y);return;}
+ const a=d.act;if(!a)return;
+ if(a==='whoami')whoami();else if(a==='pull')pullTeam();else if(a==='push')pushTeam('save');else if(a==='tsub')pushTeam(d.ph);else if(a==='upload')uploadFile();else if(a==='sendrec')sendRec();else if(a==='ppt')exportPpt();
+ else if(a==='sub-pre'){if(S.pre.c1!=='同意する'){toast('同意①（守秘）が必要です');return;}submitMe('pre',S.pre);}
+ else if(a.startsWith('sub-')){const k=a.slice(4);submitMe(k,S.hw[k]);}
+ else if(a==='copyai'){const t=aiPrompt();navigator.clipboard.writeText(t).then(()=>toast('コピーしました')).catch(()=>toast('コピーできません。文を選んでコピーしてください'));}
+ else if(a==='addpartner'){S.T.partners.push({lack:'',from:'',stage:'',gain:'',burden:''});save();render();}
+ else if(a==='menu')menu();else if(a==='big'){S.big=!S.big;save();render();}
+ else if(a==='backup'){const bl=new Blob([JSON.stringify({app:'ce2026',at:new Date().toISOString(),state:S},null,1)],{type:'application/json'});const x=document.createElement('a');x.href=URL.createObjectURL(bl);x.download=`CE特論_控え_${S.me.sid||''}_${Date.now()}.json`;x.click();}
+ else if(a==='restore')$('fileIn').click();else if(a==='close')render();
+});
+$('fileIn').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t);if(o.app!=='ce2026')throw 0;S=mg(blank(),o.state);save();render();toast('控えから戻しました');}catch(x){toast('このファイルは読み込めません');}});e.target.value='';});
+function menu(){$('app').innerHTML=`<div class="mob"><h1>控え・文字</h1><div class="box"><div class="bar"><button class="btn g" data-act="big">文字：${S.big?'ふつうに':'大きく'}</button></div><div class="bar"><button class="btn g" data-act="backup">控えをファイルに保存</button><button class="btn g" data-act="restore">控えから戻す</button></div><p class="note">入力はこの端末に自動で保存されています。端末を替えるときは控えのファイルを使います。</p></div><div class="bar"><button class="btn" data-act="close">もどる</button></div></div>`;}
+addEventListener('hashchange',render);
+(function(){const p=new URLSearchParams(location.search);if(p.get('sec'))S.sec=p.get('sec');})();
+render();
+</script>
+</body>
+</html>

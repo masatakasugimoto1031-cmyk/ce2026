@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CE特論 管理ボード（講師）</title>
+<script src="config.js"></script>
+<style>
+:root{--ac:#750145;--ac-d:#5d0037;--ac-m:#ac668f;--ac-l:#f4e8ef;--ac-l2:#e3ccd9;--ink:#1f2328;--sub:#59636e;--line:#d8dde3;--soft:#f6f7f9}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP","Yu Gothic UI",sans-serif;font-size:15px;color:var(--ink);line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;padding:8px 16px;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ac)}
+.hbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;cursor:pointer}
+.hbtn.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tabs button{border:0;background:var(--soft);border-radius:8px;padding:6px 12px;cursor:pointer}
+.tabs button.on{background:var(--ac);color:#fff;font-weight:700}
+main{padding:16px 22px 60px;max-width:1400px}
+h1{font-size:1.4em;margin:0 0 4px}
+h2{font-size:1.1em;margin:20px 0 6px;color:var(--ac-d)}
+.note{color:var(--sub);font-size:.88em}
+table.t{border-collapse:collapse;width:100%;font-size:.92em;margin:4px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:5px 7px;vertical-align:top;text-align:left}
+table.t th{background:var(--soft)}
+td.c,th.c{text-align:center}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.kpi div{background:var(--ac-l);color:var(--ac-d);border-radius:8px;padding:6px 12px;font-weight:700}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
+.btn.g{background:#fff;color:var(--ac-d);border:1px solid var(--ac)}
+.login{max-width:420px;margin:12vh auto;padding:24px;border:1px solid var(--line);border-radius:14px}
+input[type=text],input[type=password],select{border:1px solid var(--line);border-radius:8px;padding:6px 9px;width:100%}
+.big{font-size:1.25em}
+.big table.t{font-size:1em}
+.toast{position:fixed;right:18px;bottom:18px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;opacity:0;transition:opacity .3s}
+.toast.on{opacity:.95}
+.qr{display:inline-block;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 10px 6px 0;text-align:center}
+@media print{header,.noprint{display:none!important} main{padding:0} body{font-size:10pt}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+"use strict";
+const CFG=window.CE_CONFIG||{endpoint:''};
+const COMP=['JR九州','西鉄'];
+const Q7=[['A2','ひと'],['B3','技とノウハウ'],['C1','まわす力'],['D1','つながり'],['E2','選ばれる理由'],['F2','土地との関わり'],['G1','組んだ実績']];
+const SYM=['◎','○','△','？'],WHO=['本人','同じ立場','関係者','対象外'],RX=['言った','動いた','対価を出した','続けた'],RXR={'言った':1,'動いた':2,'対価を出した':3,'続けた':4};
+const KINDS=[['pre','事前課題 12/17'],['closed','クローズド事例 12/24'],['oi','OI事例 1/28'],['jr','JR九州 2/10'],['refl','振り返り 2/18']];
+const TPH=[['q','質問 12/17'],['hyp','仮説シート 1/7'],['bmc','BMC 1/21'],['final','最終 2/4']];
+const CONDS=['強みと出所','届ける相手と代わり','組む相手と増えるもの','動いた以上の反応','★とやめる条件','3つの問いと一歩','社内で通す道'];
+let ADMIN=sessionStorage.getItem('ce_admin')||'',DATA=null,TAB='subs',DRAFT=null,VIEWT='';
+const $=id=>document.getElementById(id);
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2600);}
+function fmt(d){if(!d)return '';const x=new Date(d);return `${x.getMonth()+1}/${x.getDate()} ${String(x.getHours()).padStart(2,'0')}:${String(x.getMinutes()).padStart(2,'0')}`;}
+async function load(){try{const r=await fetch(CFG.endpoint+'?'+new URLSearchParams({op:'all',admin:ADMIN}));const j=await r.json();if(!j.ok)throw new Error(j.err);DATA=parse(j);sessionStorage.setItem('ce_admin',ADMIN);render();toast('読み込みました');}catch(e){toast(e.message);if(!DATA)renderLogin();}}
+function parse(j){const subs={},team={},recs={},judge={},tph={},files={};
+ j.subs.forEach(r=>{const [at,sid,name,kind,tm,c]=r;subs[sid]=subs[sid]||{sid,name};subs[sid].name=name;subs[sid][kind]={at,data:JSON.parse(c)};});
+ j.team.forEach(r=>{const [at,t,sid,ph,c]=r;const d=JSON.parse(c);team[t]={at,phase:ph,data:d};tph[t]=tph[t]||{};if(ph&&ph!=='save')tph[t][ph]={at,data:d};});(j.files||[]).forEach(r=>{const [at,t,sid,fn,url]=r;files[t]={at,fn,url};});
+ j.recs.forEach(r=>{const [at,t,sid,rid,c]=r;recs[t]=recs[t]||{};recs[t][rid]={at,sid,data:JSON.parse(c)};});
+ j.judge.forEach(r=>{const [at,co,t,c]=r;const d=JSON.parse(c);judge[t]=judge[t]||{};judge[t][d.kind||'judge']={at,co,data:d};});
+ return {assign:j.assign||{members:{},teams:{},judges:{}},subs,team,recs,judge,tph,files};}
+function teamRecs(t){const T=(DATA.team[t]||{}).data||{};const ex=T.excl||{};return Object.entries(DATA.recs[t]||{}).filter(([rid])=>!ex[rid]).map(([,r])=>r.data);}
+function rstat(list){const real=list.filter(d=>!d.fam&&d.who);const m={};WHO.forEach(w=>{m[w]={};RX.forEach(x=>m[w][x]=0);});real.forEach(d=>{if(m[d.who]&&m[d.who][d.rx]!=null)m[d.who][d.rx]++;});
+ const strong=real.filter(d=>(d.who==='本人'||d.who==='同じ立場')&&RXR[d.rx]>=2).length;let best=null;real.forEach(d=>{if(d.rx&&(!best||RXR[d.rx]>RXR[best.rx]))best=d;});const st={};['合っていた','外れた','まだ分からない'].forEach(s=>st[s]=real.filter(d=>d.star===s).length);return {n:real.length,fam:list.length-real.length,m,strong,best,st};}
+function rtable(rs){return `<table class="t"><tr><th></th>${RX.map(x=>`<th class="c">${x}</th>`).join('')}</tr>${WHO.map(w=>`<tr><th>${w}</th>${RX.map(x=>`<td class="c">${rs.m[w][x]}</td>`).join('')}</tr>`).join('')}</table>`;}
+function renderLogin(){$('app').innerHTML=`<div class="login"><h1>CE特論 管理ボード</h1><p class="note">${CFG.endpoint?'管理パスワードを入れてください。':'config.js に受け口のURLがありません。'}</p><input type="password" id="pw" placeholder="管理パスワード"><div style="margin-top:12px"><button class="btn" id="go">開く</button></div></div>`;$('go').onclick=()=>{ADMIN=$('pw').value;load();};}
+const TABS=[['subs','提出状況'],['form','チーム編成'],['q7','7問の集計'],['recs','聞き取り'],['view','チーム別（投影）'],['judge','判定（2/5）'],['sum','集計の一枚']];
+function render(){const A=DATA.assign;$('app').innerHTML=`<header><span class="brand">CE特論 管理ボード</span><div class="tabs">${TABS.map(t=>`<button data-tab="${t[0]}" class="${TAB===t[0]?'on':''}">${t[1]}</button>`).join('')}</div><span style="margin-left:auto"></span><button class="hbtn" data-act="reload">読み込み直す</button><button class="hbtn" data-act="print">PDF（印刷）</button></header><main>${({subs:tSubs,form:tForm,q7:tQ7,recs:tRecs,view:tView,judge:tJudge,sum:tSum})[TAB]()}</main>`;if(TAB==='judge')drawQR();}
+function students(){return Object.values(DATA.subs);}
+function tSubs(){const A=DATA.assign;const st=students().sort((a,b)=>String(a.sid).localeCompare(String(b.sid)));return `<h1>提出状況</h1><div class="kpi"><div>事前課題 ${st.filter(s=>s.pre).length}人</div><div>チーム ${Object.keys(A.teams).length}</div></div>
+ <table class="t"><tr><th>学籍番号</th><th>氏名</th><th>依頼主</th><th>チーム</th>${KINDS.map(k=>`<th class="c">${k[1]}</th>`).join('')}</tr>${st.map(s=>{const m=A.members[s.sid]||{};return `<tr><td>${esc(s.sid)}</td><td>${esc(s.name)}</td><td>${esc(s.pre?s.pre.data.company:'')}</td><td>${esc(m.team||'')}${m.role==='チームリーダー'?'（チームリーダー）':''}</td>${KINDS.map(k=>`<td class="c">${s[k[0]]?fmt(s[k[0]].at):'—'}</td>`).join('')}</tr>`;}).join('')}</table>
+ <h2>チームの提出</h2><table class="t"><tr><th>チーム</th><th>依頼主</th>${TPH.map(p=>`<th class="c">${p[1]}</th>`).join('')}<th>ファイル 2/4</th><th>案の名前</th><th class="c">聞き取り</th></tr>${Object.keys(A.teams).sort().map(t=>{const d=DATA.team[t]||{};const ph=DATA.tph[t]||{};const fl=DATA.files[t];return `<tr><td>${t}</td><td>${esc(A.teams[t].company)}</td>${TPH.map(p=>`<td class="c">${ph[p[0]]?fmt(ph[p[0]].at):'—'}</td>`).join('')}<td>${fl?`<a href="${esc(fl.url)}" target="_blank" rel="noopener">${esc(fl.fn)}</a> ${fmt(fl.at)}`:'—'}</td><td>${esc(d.data?d.data.title:'')}</td><td class="c">${Object.keys(DATA.recs[t]||{}).length}</td></tr>`;}).join('')}</table>
+ <h2>12/18 担当者への質問（チームから）</h2><table class="t"><tr><th>チーム</th><th>依頼主</th><th>質問1</th><th>質問2</th></tr>${Object.keys(A.teams).sort().map(t=>{const q=((DATA.tph[t]||{}).q||{}).data;const iv=(q&&q.interview)||{};return `<tr><td>${t}</td><td>${esc(A.teams[t].company)}</td><td>${esc(iv.q1||'')}</td><td>${esc(iv.q2||'')}</td></tr>`;}).join('')}</table>`;}
+function cat16(p){const s=String(p||'').toUpperCase().replace(/[^EINSFTJP]/g,'');if(s.length<4)return '不明';if(s[1]==='N')return s[2]==='T'?'分析家':'外交官';return s[3]==='J'?'番人':'探検家';}
+function propose(){const st=students().filter(s=>s.pre);const A={members:{},teams:{},judges:{}};let letter=0;const L='ABCDEFGHIJKLMNOP';
+ COMP.forEach(co=>{const g=st.filter(s=>s.pre.data.company===co);if(!g.length)return;const nT=Math.max(1,Math.ceil(g.length/3));const tl=[];for(let i=0;i<nT;i++){const k=L[letter++];tl.push(k);A.teams[k]={company:co,key:Math.random().toString(36).slice(2,6).toUpperCase(),members:[]};}
+  const order=g.slice().sort((a,b)=>(a.pre.data.nbc==='受講した'?0:1)-(b.pre.data.nbc==='受講した'?0:1)||cat16(a.pre.data.p16).localeCompare(cat16(b.pre.data.p16))||String(a.pre.data.ind).localeCompare(String(b.pre.data.ind)));
+  order.forEach((s,i)=>{const k=tl[i%nT];A.teams[k].members.push(s.sid);A.members[s.sid]={name:s.name,team:k,role:A.teams[k].members.length===1?'チームリーダー':'メンバー'};});});
+ COMP.forEach(co=>{A.judges['J'+Math.random().toString(36).slice(2,10)]={company:co};});return A;}
+function tForm(){const A=DRAFT||DATA.assign;const st=students().filter(s=>s.pre);const teams=Object.keys(A.teams).sort();
+ return `<h1>チーム編成</h1><p class="note">依頼主→人数（2〜3人）→16Personalitiesの4つのカテゴリーと業界・職種が重ならないよう自動で割り振り、NBC経験者を散らします。チームリーダーは12/18にチームで決めてもらい、ここで直して保存します（自動案の各チーム最初の1人は仮）。「保存」で受講生の画面に反映されます。</p>
+ <div style="display:flex;gap:10px;margin:10px 0" class="noprint"><button class="btn g" data-act="propose">自動で案を作る</button><button class="btn" data-act="saveassign">保存（受講生に反映）</button>${DRAFT?'<span class="note">未保存の案があります</span>':''}</div>
+ <div class="grid2"><div><table class="t"><tr><th>氏名</th><th>依頼主</th><th>16P</th><th>業界・職種</th><th>NBC</th><th>チーム</th><th>役割</th></tr>${st.map(s=>{const m=A.members[s.sid]||{};const d=s.pre.data;return `<tr><td>${esc(s.name)}</td><td>${esc(d.company)}</td><td>${esc(d.p16)}<br><span class="note">${cat16(d.p16)}</span></td><td>${esc(d.ind)}／${esc(d.job)}</td><td>${d.nbc==='受講した'?'○':''}</td><td><select data-mt="${esc(s.sid)}"><option></option>${teams.map(t=>`<option ${m.team===t?'selected':''}>${t}</option>`).join('')}</select></td><td><select data-mr="${esc(s.sid)}">${['メンバー','チームリーダー'].map(r=>`<option ${m.role===r?'selected':''}>${r}</option>`).join('')}</select></td></tr>`;}).join('')}</table></div>
+ <div>${teams.map(t=>{const T=A.teams[t];const ms=Object.entries(A.members).filter(([,m])=>m.team===t);return `<div class="box" style="margin-bottom:8px"><b>チーム${t}</b>　${esc(T.company)}　合言葉 <b>${esc(T.key)}</b><div class="note">${ms.map(([sid,m])=>{const s=DATA.subs[sid];return `${esc(m.name)}${m.role==='チームリーダー'?'（チームリーダー）':''}［${s&&s.pre?cat16(s.pre.data.p16):''}・${s&&s.pre?esc(s.pre.data.ind):''}］`;}).join('、')}</div></div>`;}).join('')||'<p class="note">まだ案がありません</p>'}</div></div>`;}
+function tQ7(){const st=students().filter(s=>s.pre&&s.pre.data.c2==='同意する');const groups=[['全体',st],['NBC経験者',st.filter(s=>s.pre.data.nbc==='受講した')],['それ以外',st.filter(s=>s.pre.data.nbc!=='受講した')]].concat(COMP.map(c=>[c,st.filter(s=>s.pre.data.company===c)]));
+ const calc=(g,id)=>{const n={'◎':0,'○':0,'△':0,'？':0};g.forEach(s=>{const v=((s.pre.data.j||{})[id]||{}).v;if(n[v]!=null)n[v]++;});const tot=n['◎']+n['○']+n['△']+n['？'],jd=tot-n['？'],mx=Math.max(n['◎'],n['○'],n['△']);return {n,tot,r:tot?Math.round(jd*100/tot):null,a:jd?Math.round(mx*100/jd):null};};
+ return `<h1>7問の集計</h1><p class="note">同意②（集計への利用）に同意した ${st.length}人。判定できた割合＝？以外の割合／いちばん多い答えの割合＝判定できた人のうち最多の答えの割合。3人未満の区分は参考まで。名前は出しません。</p>${groups.map(([nm,g])=>`<h2>${nm}（${g.length}人）</h2><table class="t"><tr><th>問い</th>${SYM.map(s=>`<th class="c">${s}</th>`).join('')}<th class="c">判定できた割合</th><th class="c">いちばん多い答えの割合</th></tr>${Q7.map(([id,nmq])=>{const c=calc(g,id);return `<tr><td>${id} ${nmq}</td>${SYM.map(s=>`<td class="c">${c.n[s]}</td>`).join('')}<td class="c">${c.r==null?'—':c.r+'%'}</td><td class="c">${c.a==null?'—':c.a+'%'}</td></tr>`;}).join('')}</table>`).join('')}`;}
+function tRecs(){const A=DATA.assign;const teams=Object.keys(A.teams).sort();const all=rstat(teams.flatMap(teamRecs));return `<h1>聞き取り</h1><div class="kpi"><div>聞いた人 ${all.n}人（練習 ${all.fam}）</div><div>本人・同じ立場から「動いた」以上 ${all.strong}件</div><div>「動いた」以上を得たチーム ${teams.filter(t=>rstat(teamRecs(t)).strong>0).length}／${teams.length}</div></div>${rtable(all)}
+ <h2>チーム別</h2><table class="t"><tr><th>チーム</th><th>依頼主</th><th class="c">聞いた人</th><th class="c">練習</th><th class="c">動いた以上</th><th>いちばん強い反応</th><th>★ 合／外／未</th></tr>${teams.map(t=>{const r=rstat(teamRecs(t));return `<tr><td>${t}</td><td>${esc(A.teams[t].company)}</td><td class="c">${r.n}</td><td class="c">${r.fam}</td><td class="c">${r.strong}</td><td>${r.best?esc(r.best.rx)+'（'+esc(r.best.who)+'）':'—'}</td><td>${r.st['合っていた']}／${r.st['外れた']}／${r.st['まだ分からない']}</td></tr>`;}).join('')}</table>`;}
+function tView(){const A=DATA.assign;const teams=Object.keys(A.teams).sort();if(!VIEWT)VIEWT=teams[0]||'';const T=((DATA.team[VIEWT]||{}).data)||{};const H=T.hyp||{};const r=rstat(teamRecs(VIEWT));
+ return `<div class="noprint" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${teams.map(t=>`<button class="hbtn ${t===VIEWT?'p':''}" data-vt="${t}">チーム${t}</button>`).join('')}</div>
+ <div class="big"><h1>チーム${esc(VIEWT)}　${esc((A.teams[VIEWT]||{}).company||'')}　${esc(T.title||'')}</h1><div class="kpi"><div>聞いた人 ${r.n}人</div><div>本人・同じ立場から「動いた」以上 ${r.strong}件</div><div>いちばん強い反応：${r.best?esc(r.best.rx)+'（'+esc(r.best.who)+'）':'—'}</div></div>
+ <div class="grid2"><div>${rtable(r)}</div><div class="box"><b>困っている相手：</b>${esc(H.who)}<br><b>場面：</b>${esc(H.scene)}<br><b>★：</b>${esc(H.star)}（合っていた ${r.st['合っていた']}／外れた ${r.st['外れた']}／まだ分からない ${r.st['まだ分からない']}）<br><b>やめる条件：</b>${esc(H.stop)}<br><b>社内で通す道（仮説）：</b>${esc((T.mid||{}).path||'')}</div></div></div>`;}
+function hanteiURL(k){return location.href.replace(/board\.html.*$/,'')+'hantei.html?k='+encodeURIComponent(k);}
+function tJudge(){const A=DATA.assign;const teams=Object.keys(A.teams).sort();return `<h1>判定（2/5）</h1><p class="note">依頼主のご担当者さまにQRを読み取っていただくと、自社を選んだチームの判定と、他社のチームへの一言を入力できます（入るとすぐここに出ます）。</p>
+ <div>${Object.entries(A.judges||{}).map(([k,j])=>`<div class="qr"><b>${esc(j.company)}</b><div id="qr_${esc(k)}" data-url="${esc(hanteiURL(k))}"></div><div class="note" style="max-width:180px;word-break:break-all">${esc(hanteiURL(k))}</div></div>`).join('')||'<p class="note">チーム編成を保存すると作られます</p>'}</div>
+ <table class="t"><tr><th>チーム</th><th>依頼主</th>${CONDS.map((c,i)=>`<th class="c" title="${c}">${i+1}</th>`).join('')}<th class="c">そろった</th><th>判定</th><th>理由</th><th>他社からの一言</th></tr>${teams.map(t=>{const jd=(DATA.judge[t]||{}).judge,cm=(DATA.judge[t]||{}).comment;const d=jd?jd.data:{};const c=d.cond||[];return `<tr><td>${t}</td><td>${esc(A.teams[t].company)}</td>${CONDS.map((x,i)=>`<td class="c">${c[i]==='○'?'○':c[i]==='×'?'×':''}</td>`).join('')}<td class="c">${c.filter(x=>x==='○').length}／7</td><td><b>${esc(d.judge||'')}</b></td><td>${esc(d.why||'')}</td><td>${cm?esc(cm.co+'：'+cm.data.text):''}</td></tr>`;}).join('')}</table>`;}
+function drawQR(){const go=()=>document.querySelectorAll('[data-url]').forEach(el=>{el.innerHTML='';new QRCode(el,{text:el.dataset.url,width:160,height:160});});if(window.QRCode)return go();const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=go;document.head.appendChild(s);}
+function tSum(){const A=DATA.assign;const teams=Object.keys(A.teams).sort();const all=rstat(teams.flatMap(teamRecs));const st=students();const pre=st.filter(s=>s.pre);
+ const jd=teams.map(t=>(DATA.judge[t]||{}).judge).filter(Boolean).map(x=>x.data.judge);const cnt=v=>jd.filter(x=>x===v).length;
+ return `<h1>集計の一枚</h1><p class="note">作成 ${fmt(new Date())}　受講生 ${st.length}人／事前課題 ${pre.length}人（集計への同意 ${pre.filter(s=>s.pre.data.c2==='同意する').length}人）／チーム ${teams.length}。名前は出していません。</p>
+ <h2>1. 7問（判定できた割合・いちばん多い答えの割合）</h2>${tQ7().replace('<h1>7問の集計</h1>','').split('<h2>NBC経験者')[0]}
+ <h2>2. 聞き取り（相手の種類×反応）</h2><div class="kpi"><div>聞いた人 ${all.n}人</div><div>「動いた」以上 ${all.strong}件</div><div>「動いた」以上を得たチーム ${teams.filter(t=>rstat(teamRecs(t)).strong>0).length}／${teams.length}</div></div>${rtable(all)}
+ <h2>3. 依頼主の判定（2/5）</h2><div class="kpi"><div>進める ${cnt('進める')}</div><div>条件つきで進める ${cnt('条件つきで進める')}</div><div>見送る ${cnt('見送る')}</div><div>未判定 ${teams.length-jd.length}</div></div>
+ <table class="t"><tr><th>条件</th>${CONDS.map((c,i)=>`<th class="c">${i+1}</th>`).join('')}</tr><tr><td>そろったチーム数</td>${CONDS.map((c,i)=>`<td class="c">${teams.filter(t=>{const j=(DATA.judge[t]||{}).judge;return j&&(j.data.cond||[])[i]==='○';}).length}</td>`).join('')}</tr></table>
+ <h2>4. チームの案</h2><table class="t"><tr><th>チーム</th><th>依頼主</th><th>案の名前</th><th>結論</th><th>判断（作り直す）</th><th>判定</th></tr>${teams.map(t=>{const d=((DATA.team[t]||{}).data)||{};const j=(DATA.judge[t]||{}).judge;return `<tr><td>${t}</td><td>${esc(A.teams[t].company)}</td><td>${esc(d.title||'')}</td><td>${esc(d.summary||'')}</td><td>${esc((d.rev||{}).judge||'')}</td><td>${j?esc(j.data.judge):''}</td></tr>`;}).join('')}</table>
+ <div class="noprint" style="margin-top:12px"><button class="btn g" data-act="csv">CSVで保存</button></div>`;}
+function csv(){const A=DATA.assign;const teams=Object.keys(A.teams).sort();const rows=[['チーム','依頼主','聞いた人','動いた以上','判定','そろった条件']];teams.forEach(t=>{const r=rstat(teamRecs(t));const j=(DATA.judge[t]||{}).judge;rows.push([t,A.teams[t].company,r.n,r.strong,j?j.data.judge:'',j?(j.data.cond||[]).filter(x=>x==='○').length:'']);});
+ const c='﻿'+rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='CE特論_集計.csv';a.click();}
+async function saveAssign(){const A=DRAFT||DATA.assign;Object.keys(A.teams).forEach(t=>{A.teams[t].members=Object.entries(A.members).filter(([,m])=>m.team===t).map(([s])=>s);});
+ try{const r=await fetch(CFG.endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({op:'assign',admin:ADMIN,assign:A})});const j=await r.json();if(!j.ok)throw new Error(j.err);DRAFT=null;await load();toast('保存しました（受講生に反映）');}catch(e){toast(e.message);}}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;if(d.tab){TAB=d.tab;render();return;}if(d.vt){VIEWT=d.vt;render();return;}
+ if(d.act==='reload')load();else if(d.act==='print')print();else if(d.act==='propose'){DRAFT=propose();render();}else if(d.act==='saveassign')saveAssign();else if(d.act==='csv')csv();});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.mt||t.dataset.mr){if(!DRAFT)DRAFT=JSON.parse(JSON.stringify(DATA.assign));const sid=t.dataset.mt||t.dataset.mr;const s=DATA.subs[sid];DRAFT.members[sid]=DRAFT.members[sid]||{name:s.name,team:'',role:'メンバー'};if(t.dataset.mt)DRAFT.members[sid].team=t.value;else DRAFT.members[sid].role=t.value;render();}});
+if(ADMIN&&CFG.endpoint)load();else renderLogin();
+</script>
+</body>
+</html>
