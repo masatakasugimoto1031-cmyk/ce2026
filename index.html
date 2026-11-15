@@ -129,16 +129,18 @@ function tx(p,label,ph){return `${label?`<label class="f">${label}</label>`:''}<
 function seg(p,opts){const v=get(p);return `<div class="seg">${opts.map(o=>`<button data-seg="${p}" data-v="${esc(o)}" class="${v===o?'on':''}">${esc(o)}</button>`).join('')}</div>`;}
 
 /* ---------- 通信 ---------- */
-async function post(body){if(!CFG.endpoint)throw new Error('受け口がまだ設定されていません（講師に連絡）');const r=await fetch(CFG.endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});const j=await r.json();if(!j.ok)throw new Error(j.err||'送れませんでした');return j;}
-async function fetchGet(q){if(!CFG.endpoint)throw new Error('受け口がまだ設定されていません（講師に連絡）');const r=await fetch(CFG.endpoint+'?'+new URLSearchParams(q));const j=await r.json();if(!j.ok)throw new Error(j.err||'読めませんでした');return j;}
+async function post(body){if(!CFG.endpoint)throw new Error('受け口がまだ設定されていません（講師に連絡）');let r;try{r=await fetch(CFG.endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});}catch(e){throw new Error('送れませんでした。通信を確かめて、送り直してください（入力はこの端末に残っています）');}let j;try{j=await r.json();}catch(e){throw new Error('混んでいます。1分後に送り直してください（入力はこの端末に残っています）');}if(!j.ok){const er=new Error(j.err||'送れませんでした');er.code=j.err;er.at=j.at;throw er;}return j;}
+async function fetchGet(q){if(!CFG.endpoint)throw new Error('受け口がまだ設定されていません（講師に連絡）');let j;try{const r=await fetch(CFG.endpoint+'?'+new URLSearchParams(q));j=await r.json();}catch(e){throw new Error('読めませんでした。通信を確かめて、もう一度押してください');}if(!j.ok)throw new Error(j.err||'読めませんでした');return j;}
 async function whoami(){if(!S.me.sid||!S.me.name){toast('はじめに学籍番号と氏名を入れてください');return;}try{const j=await fetchGet({op:'me',sid:S.me.sid,name:S.me.name});S.mine=j.me;save();render();toast(j.me?`チーム${j.me.team}（${j.me.company}）・${j.me.role}`:'まだチームに登録されていません（12/18の編成のあと）');}catch(e){toast(e.message);}}
 async function pullTeam(){if(!S.mine){await whoami();if(!S.mine)return;}try{const j=await fetchGet({op:'team',team:S.mine.team,tkey:S.mine.tkey});
- if(j.team&&!isRec()){S.T=mg(blankT(),j.team.data);S.teamAt=j.team.at;}else if(j.team&&isRec()&&!S.teamAt){S.T=mg(blankT(),j.team.data);S.teamAt=j.team.at;}
+ const newer=j.team&&(!S.teamAt||new Date(j.team.at).getTime()>new Date(S.teamAt).getTime()+1000);
+ if(newer&&(!isRec()||!S.dirty||confirm('ほかの端末で、もっと新しいチームの提出があります。それを読み込みますか？（この端末でまだ送っていない入力は消えます）'))){S.T=mg(blankT(),j.team.data);S.teamAt=j.team.at;S.dirty=false;}
  S.recs=dedupe(j.recs||[]);save();render();toast('チームの最新を読みました');}catch(e){toast(e.message);}}
 function dedupe(rs){const m={};rs.forEach(r=>{m[r.rid||Math.random()]=r;});return Object.values(m);}
-const TPH={q:'担当者への質問',hyp:'仮説シート（1/7）',bmc:'ビジネスモデルキャンバス（1/21）',final:'最終の提出（2/4）',save:'共有'};
+const TPH={q:'担当者への質問（12/18）',hyp:'仮説シート（1/7）',bmc:'ビジネスモデルキャンバス（1/21）',final:'最終の提出（2/4）',save:'共有'};
 async function pushTeam(ph){ph=ph||'save';if(!isRec()){toast('チームの画面への入力と提出はチームリーダーだけができます');return;}if(!S.mine){await whoami();if(!S.mine)return;}const T=S.T;const data=JSON.parse(JSON.stringify(T));data.title=T.shape.title;data.summary=T.shape.concl;
- try{const j=await post({op:'team',sid:S.me.sid,name:S.me.name,team:S.mine.team,phase:ph,data});S.teamAt=j.at;if(ph!=='save')S.tsent[ph]=j.at;save();render();toast(ph==='save'?'メンバーに共有しました':TPH[ph]+'を提出しました（メンバーにも共有されます）');}catch(e){toast(e.message);}}
+ const len=JSON.stringify(data).length;if(len>48000){toast(`中身が長すぎて送れません（${len}字／上限約48,000字）。AIの答えなど長い欄を短くしてください`);return;}if(len>40000)toast(`中身が長くなっています（${len}字）。上限は約48,000字です`);
+ try{const j=await post({op:'team',sid:S.me.sid,name:S.me.name,team:S.mine.team,phase:ph,baseAt:S.teamAt||'',data});S.teamAt=j.at;S.dirty=false;if(ph!=='save')S.tsent[ph]=j.at;save();render();toast(ph==='save'?'メンバーに共有しました':TPH[ph]+'を提出しました（メンバーにも共有されます）');}catch(e){if(e.code==='conflict'){toast('ほかの端末で新しい提出があります。「チームの最新を読む」を押してから、直して送ってください');}else toast(e.message);}}
 function subBtn(ph,label){return isRec()?`<div class="bar"><button class="btn" data-act="tsub" data-ph="${ph}">${label}</button>${S.tsent[ph]?`<span class="note">提出済み ${fmt(S.tsent[ph])}（出し直せます。最後のものが使われます）</span>`:''}</div>`:'';}
 async function uploadFile(){const f=$('pptIn').files[0];if(!f){toast('ファイルを選んでください');return;}if(f.size>20*1024*1024){toast('20MBまでです。画像を圧縮してください');return;}if(!S.mine){await whoami();if(!S.mine)return;}toast('送っています…');
  const b64=await new Promise((ok,ng)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=ng;r.readAsDataURL(f);});
@@ -228,7 +230,7 @@ function recForm(){return `<label class="f">相手の種類</label>${seg('draft.
  ${tx('draft.date','日付・場所','例：12/28 博多駅')}${ta('draft.said','相手が言ったこと','',2)}${ta('draft.does','相手が実際にしていること','',2)}${ta('draft.alt','いまの代わりの手段（いくら・どれだけ手間）','',2)}
  <label class="f">★はどうだった？</label>${seg('draft.star',STAR)}${ta('draft.note','相手の乗り気と気がかり（任意）','',1)}`;}
 function secRecSend(){return `<div class="grid2"><div class="box">${recForm()}<div class="bar"><button class="btn" data-act="sendrec">この1件を送る</button></div></div>
- <div class="box soft"><h3>数え方</h3><p class="note" style="margin:0">1対1で、チームで3人以上（同じ人は1人）。最初に★を確かめる。「いいですね」「あったら使う」は「言った」。<b>動いた</b>＝時間を取って見せた・紹介した・試した／<b>対価を出した</b>＝払った・払うと約束した／<b>続けた</b>＝繰り返し使っている。案を売り込まず、いまの間に合わせ方とかけているお金・手間を聞く。</p>
+ ${nanori()}<div class="box soft"><h3>数え方</h3><p class="note" style="margin:0">1対1で、チームで3人以上（同じ人は1人）。最初に★を確かめる。「いいですね」「あったら使う」は「言った」。<b>動いた</b>＝時間を取って見せた・紹介した・試した／<b>対価を出した</b>＝払った・払うと約束した／<b>続けた</b>＝繰り返し使っている。案を売り込まず、いまの間に合わせ方とかけているお金・手間を聞く。</p>
  <h3 style="margin-top:12px">送ったもの（${S.myRecs.length}件）</h3>${S.myRecs.map(r=>`<div class="note">${fmt(r.at)}　${esc(r.data.who)}／${esc(r.data.rx)}　${esc((r.data.said||'').slice(0,30))}</div>`).join('')||'<p class="note">まだありません</p>'}
  <p class="note">スマホでは、このページのURLの末尾に <b>#k</b> を付けて開くと、送るだけの画面になります。</p></div></div>`;}
 function secTeam(){const m=S.mine;if(!m)return `<p class="note">12/18のチーム編成のあと、「自分のチームを確かめる」を押してください。</p>`;
@@ -236,7 +238,7 @@ function secTeam(){const m=S.mine;if(!m)return `<p class="note">12/18のチー�
  <div class="box"><h3>メンバー</h3>${(m.members||[]).map(n=>`<div>${esc(n)}</div>`).join('')}<p class="note">あなたの役割：<b>${esc(m.role)}</b></p></div>
  <div class="box"><h3>チームの合言葉</h3><div style="font-size:1.4em;font-weight:800;letter-spacing:.1em">${esc(m.tkey)}</div><p class="note">聞き取りを送るとき・チームの最新を読むときに使います（自動で入ります）。チームの外に教えないでください。</p></div></div>
  <p class="note">チームリーダーは12/18にチームで決めます。決まったら講師がボードで登録を直すので、全員「登録を読み直す」を押してください。</p><div class="bar"><button class="btn g" data-act="whoami">登録を読み直す</button><button class="btn g" data-act="pull">チームの最新を読む</button></div>`;}
-function secInterview(){const p='T.interview.';return `<div class="grid2"><div class="box"><h3>前日までに講師へ送る質問（チームで1〜2問）</h3>${ta(p+'q1','質問1','公開情報で分かることは聞かない',2)}${ta(p+'q2','質問2','',2)}<p class="note">前日（12/17）までに下のボタンで講師に送ります。答えられないことは答えなくてよい、と最初に伝えます。</p>${subBtn('q','質問を講師に送る')}</div>
+function secInterview(){const p='T.interview.';return `<div class="grid2"><div class="box"><h3>担当者への質問（12/18の講義中にチームで1〜2問）</h3>${ta(p+'q1','質問1','公開情報で分かることは聞かない',2)}${ta(p+'q2','質問2','',2)}<p class="note">チーム編成のあと、聞き取りの前にチームで決めて入力し、下のボタンで講師に送ります（講師が担当者に見せます）。答えられないことは答えなくてよい、と最初に伝えます。</p>${subBtn('q','質問を講師に送る（12/18 講義中）')}</div>
  <div class="box soft"><h3>進め方（各社30分）</h3><p class="note" style="margin:0">冒頭5分：担当者から「新規事業が社内でどう進み、どこで決まるか」。残りの時間：その会社を選んだチームから、チームの順に質問する。聞いた内容は守秘（同意①）。</p></div></div>
  <h3 style="margin:16px 0 6px">聞いたこと（相手の言葉のまま）</h3><div class="grid2"><div class="box">${ta(p+'qa','7つの力の「？」への答え','',4)}</div><div class="box">${ta(p+'who','最初の一歩を誰が決めるか','',2)}${ta(p+'where','どの場で通すか','',2)}</div>
  <div class="box">${ta(p+'res','借りられそうな社内の資源（人・予算・設備・顧客との接点）','',3)}</div><div class="box">${ta(p+'conflict','既存の事業とぶつかる点・助け合える点','',3)}</div></div>`;}
@@ -249,7 +251,7 @@ function secFind(){const T=S.T;const tr=T.treas.map((t,i)=>({i,...t})).filter(t=
  <div class="bar"><button class="btn g" data-act="copyai">指示文をコピー</button><span class="note">AIの答えは聞いた事実ではありません。根拠欄に書かない。依頼主の社内の情報はAIに入れない。</span></div>`;}
 function aiPrompt(){const T=S.T,c=T.cell;const t=c?T.treas[c[0]]:null,p=c?T.troubles[c[1]]:null;return `次の「困りごと」に、${S.mine?S.mine.company:'依頼主'}の次の「強み」を使った新しい事業を1つ提案してください。誰に、何を、どう届け、誰がいくら払うかを5行で。\n困りごと：${p||'（総当たりで選んだ困りごと）'}\n強み：${t&&t.w?t.w:'（宝のひと言）'}`;}
 function secHyp(){const p='T.hyp.';const rows=[['who','困っている相手','名前か、特定できる立場で（複数可）','「観光客」「高齢者」は相手ではない'],['scene','困りごとの場面','いつ・どこで・何に困っているか','分類の言葉で終わらせない'],['alt','いまの代わりの手段','いま何で間に合わせているか','分からなければ「未確認」'],['altCost','代わりにかけているもの','いくら・どれだけ手間をかけているか',''],['give','渡すもの','何を渡すか（商品・サービス・場・仕組み）','「プラットフォーム」だけで終わらせない'],['pay','相手が払うもの','お金・時間・手間・情報のどれを、どれだけ','払う人と使う人が違うときは両方'],['p1','組む相手①','強みを渡す相手','第10・11回で見直す'],['p2','組む相手②','足りないものを埋めてくれる相手',''],['star','いちばん確かでない条件（★）','これが外れたら案が成り立たない条件','聞き取りの最初に確かめる'],['stop','やめる条件','聞いた結果がこうなら、やめる（聞く前に決める）','「いいですね」だけなら続けない、など']];
- return `<p class="note">チームで1枚。使う強みは「見つける→つなぐ」で選んだマス：<b>${esc(chosenText())}</b></p><table class="t"><tr><th style="width:18%">欄</th><th style="width:22%">書くこと</th><th>記入</th><th style="width:20%">例・注意</th></tr>${rows.map(r=>`<tr><th>${r[1]}</th><td class="note">${r[2]}</td><td><textarea data-p="${p+r[0]}" rows="2">${esc(S.T.hyp[r[0]])}</textarea></td><td class="note">${r[3]}</td></tr>`).join('')}</table>
+ return `${nanori()}<p class="note">チームで1枚。使う強みは「見つける→つなぐ」で選んだマス：<b>${esc(chosenText())}</b></p><table class="t"><tr><th style="width:18%">欄</th><th style="width:22%">書くこと</th><th>記入</th><th style="width:20%">例・注意</th></tr>${rows.map(r=>`<tr><th>${r[1]}</th><td class="note">${r[2]}</td><td><textarea data-p="${p+r[0]}" rows="2">${esc(S.T.hyp[r[0]])}</textarea></td><td class="note">${r[3]}</td></tr>`).join('')}</table>
  <p class="note">聞き取りの記録はメンバーが送ったものが自動で集まります。3人に届かなくても提出し、理由を中間確認で話します。</p>${subBtn('hyp','仮説シートを提出（1/7）')}`;}
 function chosenText(){const T=S.T,c=T.cell;if(!c)return '未選択';return `${T.treas[c[0]].w} × ${T.troubles[c[1]]}`;}
 function secRecs(){const rs=recStats();return `<div class="kpi"><div>聞いた人 ${rs.n}人（練習 ${rs.fam}人は別）</div><div>本人・同じ立場から「動いた」以上 ${rs.strong}件</div><div>いちばん強い反応：${rs.best?esc(rs.best.rx)+'（'+esc(rs.best.who)+'）':'まだない'}</div><div>★ 合っていた ${rs.st['合っていた']}／外れた ${rs.st['外れた']}／まだ分からない ${rs.st['まだ分からない']}</div></div>
@@ -334,12 +336,13 @@ async function exportPpt(){try{await loadPptx();}catch(e){toast(e.message);retur
  const fn=`CE特論_チーム${m.team||''}_${(T.shape.title||'提案').replace(/[\\/:*?"<>|]/g,'')}.pptx`;let blob=await pres.write({outputType:'blob'});if(window.JSZip){const z=await JSZip.loadAsync(blob);const nz=new JSZip();for(const k of Object.keys(z.files)){const f=z.files[k];if(f.dir)continue;nz.file(k,await f.async('uint8array'),{createFolders:false});}blob=await nz.generateAsync({type:'blob',compression:'DEFLATE',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation'});}const x=document.createElement('a');x.href=URL.createObjectURL(blob);x.download=fn;document.body.appendChild(x);x.click();x.remove();toast('PPTを書き出しました');}
 
 /* ---------- スマホ用（#k） ---------- */
-function mobile(){return `<div class="mob"><h1>聞き取りを送る（1件ずつ）</h1><p class="note">${S.mine?`チーム${esc(S.mine.team)}（${esc(S.mine.company)}）・${esc(S.me.name)}`:'はじめに学籍番号と氏名を入れて「チームを確かめる」'}</p>
+function nanori(){const co=S.mine&&S.mine.company?S.mine.company:'JR九州・西鉄';return `<div class="box" style="border-color:var(--ac);margin-bottom:10px"><h3>聞く前に（名乗りと約束）</h3><p style="margin:0 0 4px">「九州大学の授業の課題で、お話を伺っています。${esc(co)}の社員ではありません。」</p><p class="note" style="margin:0">お金は受け取らない（「払うと言ったか」を記録するだけ）。案を売り込まない。断られたらお礼を言って終える。聞いたことは授業の外に出さない。</p></div>`;}
+function mobile(){return `<div class="mob"><h1>聞き取りを送る（1件ずつ）</h1>${nanori()}<p class="note">${S.mine?`チーム${esc(S.mine.team)}（${esc(S.mine.company)}）・${esc(S.me.name)}`:'はじめに学籍番号と氏名を入れて「チームを確かめる」'}</p>
  ${S.mine?'':`<div class="box">${tx('me.sid','学籍番号','')}${tx('me.name','氏名','')}<div class="bar"><button class="btn" data-act="whoami">チームを確かめる</button></div></div>`}
  <div class="box" style="margin-top:10px">${recForm()}<div class="bar"><button class="btn" data-act="sendrec" style="width:100%;padding:14px">この1件を送る</button></div></div><p class="note">送ったもの：${S.myRecs.length}件。PCの画面は、このURLの末尾の #k を消して開きます。</p></div>`;}
 
 /* ---------- 操作 ---------- */
-document.addEventListener('input',e=>{const t=e.target;if(t.dataset.p)set(t.dataset.p,t.value);});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.p){set(t.dataset.p,t.value);if(t.dataset.p.startsWith('T.'))S.dirty=true;}});
 document.addEventListener('change',e=>{const t=e.target;if(t.dataset.p&&t.dataset.p.startsWith('T.bmd.players')){const y=scrollY;render();scrollTo(0,y);}if(t.dataset.p&&t.tagName==='SELECT'){set(t.dataset.p,t.value);}if(t.dataset.chk){set(t.dataset.chk,t.checked);}if(t.dataset.ex!=null){if(t.checked)delete S.T.excl[t.dataset.ex];else S.T.excl[t.dataset.ex]=true;save();render();}});
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
  if(d.go){go(d.go);return;}
