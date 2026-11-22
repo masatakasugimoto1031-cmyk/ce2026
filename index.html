@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>CE特論 ワークベンチ｜依頼主の新規事業担当として</title>
+<title>コーポレート・アントレプレナーシップ特論（CE特論） ワークベンチ</title>
 <script src="config.js"></script>
 <style>
 :root{--ac:#750145;--ac-d:#5d0037;--ac-m:#ac668f;--ac-l:#f4e8ef;--ac-l2:#e3ccd9;--ink:#1f2328;--sub:#59636e;--line:#d8dde3;--soft:#f6f7f9;--ok:#1f7a4d;--warn:#a15c00;--fs:16px}
@@ -108,7 +108,7 @@ function blankT(){return {interview:{q1:'',q2:'',who:'',where:'',res:'',conflict
  path:{who:'',where:'',res:'',conflict:'',fallback:''},shape:{title:'',concl:'',ask:'',first:'',three:{who:'',start:'',newv:''},cond:[null,null,null,null,null,null,null],condWhy:'',aiDiff:''},excl:{}};}
 function blank(){return {ver:1,big:false,sec:'me_profile',me:{sid:'',name:''},
  pre:{company:'',purpose:'',purposeWhy:'',j:{},p16:'',ind:'',job:'',nbc:'',c1:false,c2:''},
- hw:{closed:{a:'',b:'',c:''},bmc:{name:'',kp:'',ka:'',kr:'',vp:'',cr:'',ch:'',cs:'',cost:'',rev:''},oi:{type:'',a:'',b:'',c:''},jr:{v:'',o:'',s:'',x:''},refl:{a:'',b:'',c:''}},
+ hw:{inno:{company:'',c1:'',c2:'',c3:'',c4:'',c5:'',c6:'',c7:''},closed:{name:'',who:'',aim:'',proc:'',ok:'',ng:''},bmc:{name:'',kp:'',ka:'',kr:'',vp:'',cr:'',ch:'',cs:'',cost:'',rev:''},oi:{type:'',name:'',aim:'',who:'',ok:'',ng:''},jr:{v:'',o:'',s:'',x:''},refl:{a:'',b:'',c:''}},
  sent:{},tsent:{},mine:null,T:blankT(),recs:[],teamAt:'',myRecs:[],draft:{who:'',rx:'',date:'',said:'',does:'',alt:'',star:'',note:'',fam:false}};}
 let S=load();
 function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&x.ver===1)return mg(blank(),x);}catch(e){}return blank();}
@@ -163,6 +163,7 @@ function condAuto(){const T=S.T,H=T.hyp,P=T.path,Th=T.shape.three;const rs=recSt
 const SEC=[
  {g:'ひとりの課題',id:'me_profile',t:'はじめに',d:'',r:secProfile,st:()=>S.me.sid&&S.me.name?'done':''},
  {g:'ひとりの課題',id:'me_pre',t:'事前課題：依頼主の7つの力',d:'12/17（木）23:59',r:secPre,st:()=>S.sent.pre?'sent':(S.pre.company?'done':'')},
+ {g:'ひとりの課題',id:'me_inno',t:'第2回 依頼主の事業を7つのマスで整理',d:'12/17（木）23:59',r:secInno,st:()=>S.sent.inno?'sent':(S.hw.inno.company?'done':'')},
  {g:'ひとりの課題',id:'me_closed',t:'クローズドイノベーションの事例',d:'12/24（木）23:59',r:()=>secHw('closed'),st:()=>S.sent.closed?'sent':''},
  {g:'ひとりの課題',id:'me_rec',t:'聞き取りを送る（1件ずつ）',d:'年末年始〜1/7',r:secRecSend,st:()=>S.myRecs.length?'done':''},
  {g:'ひとりの課題',id:'me_oi',t:'オープンイノベーションの事例',d:'1/28（木）23:59',r:()=>secHw('oi'),st:()=>S.sent.oi?'sent':''},
@@ -189,7 +190,7 @@ function render(){document.documentElement.classList.toggle('big',!!S.big);
  const sec=SEC.find(s=>s.id===S.sec)||SEC[0];const ca=condAuto();let g='';
  const nav=SEC.map(s=>{const h=s.g!==g?`<div class="grp">${s.g}</div>`:'';g=s.g;const st=s.st();return h+`<button class="it ${s.id===sec.id?'on':''}" data-go="${s.id}"><span>${s.t}<small>${s.d}</small></span><span class="st ${st}">${st==='sent'?'提出済み':st==='done'?'記入中':'—'}</span></button>`;}).join('');
  const team=sec.id.startsWith('t_');
- $('app').innerHTML=`<header><span class="brand">CE特論 ワークベンチ</span><span class="who">${S.me.name?esc(S.me.name):'（氏名未入力）'}${S.mine?`｜チーム${esc(S.mine.team)}・${esc(S.mine.company||'')}・${esc(S.mine.role)}`:''}</span>
+ $('app').innerHTML=`<header><span class="brand">コーポレート・アントレプレナーシップ特論（CE特論） ワークベンチ</span><span class="who">${S.me.name?esc(S.me.name):'（氏名未入力）'}${S.mine?`｜チーム${esc(S.mine.team)}・${esc(S.mine.company||'')}・${esc(S.mine.role)}`:''}</span>
  <span class="conds"><span class="l">依頼主の7つの条件</span>${ca.map((v,i)=>`<span class="cd ${v?'on':''}" title="${esc(COND[i])}">${i+1}</span>`).join('')}</span>
  <button class="hbtn" data-act="pull">チームの最新を読む</button>${isRec()?`<button class="hbtn p" data-act="push" title="いまの入力をメンバーに共有します（提出は各画面のボタン）">メンバーに共有</button>`:''}<button class="hbtn" data-act="menu">控え・文字</button></header>
  <div class="wrap"><nav class="side">${nav}<p class="note" style="margin:16px 8px">画面の版：${esc(CFG.version)}${CFG.endpoint?'':'<br><span class="warn">受け口が未設定（提出はできません）</span>'}</p></nav>
@@ -210,13 +211,21 @@ function secPre(){const P=S.pre;return `<div class="grid2"><div class="box"><h3>
  ${Q7.map(q=>{if(!P.j[q.id])P.j[q.id]={v:'',src:''};return `<tr><td>${q.f}</td><td>${q.k}</td><td>${q.q}</td><td class="c">${seg('pre.j.'+q.id+'.v',SYM)}</td><td><textarea data-p="pre.j.${q.id}.src" rows="1">${esc(P.j[q.id].src)}</textarea></td></tr>`;}).join('')}</table>
  <div class="grid3" style="margin-top:14px"><div class="box"><h3>4. 16Personalitiesのタイプ</h3>${tx('pre.p16','','例：ENFP（広報運動家）')}<p class="note">チーム編成のバランスにだけ使い、資料や記録には残しません</p></div>
  <div class="box"><h3>5. 業界・職種</h3>${tx('pre.ind','業界','')}${tx('pre.job','職種','')}</div>
- <div class="box"><h3>6. 九大NBC（2026年10〜11月）</h3>${seg('pre.nbc',['受講した','受講していない'])}<p class="note">集計を分けるためだけに使います</p></div></div>
+ <div class="box"><h3>6. 九州大学ロバート・ファン／アントレプレナーシップ・センター（QREC）の「ニュービジネス・クリエーション（NBC）」（2026年10〜11月）</h3>${seg('pre.nbc',['受講した','受講していない'])}<p class="note">集計を分けるためだけに使います</p></div></div>
  <div class="grid2" style="margin-top:14px"><div class="box"><h3>同意①（必須）依頼主の社内情報の守秘</h3><p class="note">第3回の聞き取りと、その後の講義で知った依頼主の社内の情報を、講義の外で話したり書いたりしません。SNSや生成AIのサービスに入力しません。</p>${seg('pre.c1',['同意する'])}</div>
  <div class="box"><h3>同意②（任意）判定の集計への利用</h3><p class="note">事前課題の判定を、名前を外した集計値として講義の方法の改善に使います。同意しなくても成績には影響しません。</p>${seg('pre.c2',['同意する','同意しない'])}</div></div>
  <div class="bar"><button class="btn" data-act="sub-pre">事前課題を提出</button>${S.sent.pre?`<span class="note">提出済み ${fmt(S.sent.pre)}（何度でも出し直せます。最後のものが使われます）</span>`:''}</div>`;}
-const HW={closed:{a:'自社・所属先のクローズドイノベーション制度の内容',b:'成功している点',c:'課題点（自社に制度がなければ書籍等から）'},oi:{a:'自社・所属先のオープンイノベーション制度の内容',b:'成功している点',c:'課題点'},jr:{v:'① 経営トップのコミットメント（ビジョン）',o:'② 組織メカニズム（組織）',s:'③ イノベーションプロセスの構築（制度）',x:'④ その他（気づき・疑問）'},refl:{a:'① 講義にて学んだこと',b:'② 本郷さんへのメッセージ',c:'あわせて：社外の反応と社内の決定、どちらで案が変わったか（1行）'}};
-function secHw(k){const f=HW[k];return `${k==='jr'?'<p class="note">JR九州が国鉄民営化後に多角化によって上場に至った成功要因を、3つの視点で考察する（仮説でよい）。課題シートはゲスト講師に事前共有します。</p>':''}${k==='refl'?'<p class="note">本郷さんへの礼状に添えるもので、成績とは関係ありません。</p>':''}${k==='oi'?`<label class="f">類型</label>${seg('hw.oi.type',['インバウンド型','アウトバウンド型','カップルド型'])}`:''}
- <div class="${Object.keys(f).length>3?'grid2':'grid3'}">${Object.keys(f).map(x=>`<div class="box">${ta('hw.'+k+'.'+x,f[x],'',6)}</div>`).join('')}</div>
+const HW={closed:{name:'制度の名称',who:'① 制度の対象者',aim:'② 制度の目的',proc:'③ 制度のプロセス',ok:'④ 制度の成功点',ng:'⑤ 制度の課題'},oi:{name:'制度名',aim:'① オープンイノベーションの目的',who:'② 対象者（イノベーションの相手）',ok:'③ 目的に対してできていること',ng:'④ 目的に対してできていないこと'},jr:{v:'① 経営トップのコミットメント（ビジョン）',o:'② 組織メカニズム（組織）',s:'③ イノベーションプロセスの構築（制度）',x:'④ その他（気づき・疑問）'},refl:{a:'① 講義にて学んだこと',b:'② 本郷さんへのメッセージ',c:'あわせて：社外の反応と社内の決定、どちらで案が変わったか（1行）'}};
+function secInno(){const b='hw.inno.';return `<p class="note">選んだ依頼主（JR九州・西鉄のどちらか）の1990年以降のグループの事業を、7つのマスに整理する（JR九州は国鉄民営化まで遡らない）。分からないマスは空けたままでよい。</p>
+ <label class="f">依頼主</label>${seg(b+'company',['JR九州','西鉄'])}
+ <div style="display:grid;grid-template-columns:120px repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;align-items:stretch">
+ <div class="note" style="align-self:center">業界にとって革新サービス</div><div class="box" style="grid-column:span 2">${ta(b+'c1','新しい消費・消費者の特定','',3)}</div><div class="box">${ta(b+'c2','全く新しい市場・ビジネスの創出','',3)}</div>
+ <div class="note" style="align-self:center">自社にとって新規サービス</div><div class="box">${ta(b+'c3','新商品・新サービスの提供','',3)}</div><div class="box">${ta(b+'c4','バリューチェーンの変革／拡大','',3)}</div><div class="box">${ta(b+'c5','新しい商品・サービス・ビジネスモデルによる競争ルール自体の変革','',3)}</div>
+ <div class="note" style="align-self:center">既存サービス</div><div class="box">${ta(b+'c6','価格最適化、既存商品/サービスの改善','',3)}</div><div class="box">${ta(b+'c7','新地域・新セグメントの開拓','',3)}</div><div></div>
+ <div></div><div class="note c">既存顧客</div><div class="note c">新規顧客</div><div class="note c">顧客創出</div></div>
+ <div class="bar"><button class="btn" data-act="sub-inno">提出</button>${S.sent.inno?`<span class="note">提出済み ${fmt(S.sent.inno)}</span>`:''}</div>`;}
+function secHw(k){const f=HW[k];return `${k==='jr'?'<p class="note">JR九州が国鉄民営化後に多角化によって上場に至った成功要因を、3つの視点で考察する（仮説でよい）。課題シートはゲスト講師に事前共有します。</p>':''}${k==='refl'?'<p class="note">本郷さんへの礼状に添えるもので、成績とは関係ありません。</p>':''}${k==='closed'||k==='oi'?'<p class="note">自社・所属先の制度をまとめる。自社に制度がない場合は書籍等から書く。</p>':''}${k==='oi'?`<label class="f">類型</label>${seg('hw.oi.type',['インバウンド型','アウトバウンド型','カップルド型'])}`:''}
+ <div class="${Object.keys(f).length>3?'grid2':'grid3'}">${Object.keys(f).map(x=>`<div class="box">${ta('hw.'+k+'.'+x,f[x],'',x==='name'?2:6)}</div>`).join('')}</div>
  <div class="bar"><button class="btn" data-act="sub-${k}">提出</button>${S.sent[k]?`<span class="note">提出済み ${fmt(S.sent[k])}</span>`:''}</div>`;}
 function bmcGrid(b){return `${tx(b+'name','事業名','')}
  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:auto auto auto;gap:8px;margin-top:10px">
