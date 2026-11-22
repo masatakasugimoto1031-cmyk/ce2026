@@ -14,7 +14,7 @@ html,body{margin:0;height:100%}
 body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP","Yu Gothic UI",sans-serif;font-size:var(--fs);color:var(--ink);line-height:1.55;background:#fff}
 button,input,textarea,select{font:inherit;color:inherit}
 header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:8px 16px;flex-wrap:wrap}
-.brand{font-weight:800;color:var(--ac)}
+.brand{font-weight:800;color:var(--ac);font-size:14px;line-height:1.3}.brand small{font-size:12px;color:var(--mut,#52606d);font-weight:600}
 .who{color:var(--sub);font-size:.88em}
 .conds{display:flex;gap:4px;margin-left:auto;align-items:center}
 .conds span.l{font-size:.78em;color:var(--sub);margin-right:4px}
@@ -190,7 +190,7 @@ function render(){document.documentElement.classList.toggle('big',!!S.big);
  const sec=SEC.find(s=>s.id===S.sec)||SEC[0];const ca=condAuto();let g='';
  const nav=SEC.map(s=>{const h=s.g!==g?`<div class="grp">${s.g}</div>`:'';g=s.g;const st=s.st();return h+`<button class="it ${s.id===sec.id?'on':''}" data-go="${s.id}"><span>${s.t}<small>${s.d}</small></span><span class="st ${st}">${st==='sent'?'提出済み':st==='done'?'記入中':'—'}</span></button>`;}).join('');
  const team=sec.id.startsWith('t_');
- $('app').innerHTML=`<header><span class="brand">コーポレート・アントレプレナーシップ特論（CE特論） ワークベンチ</span><span class="who">${S.me.name?esc(S.me.name):'（氏名未入力）'}${S.mine?`｜チーム${esc(S.mine.team)}・${esc(S.mine.company||'')}・${esc(S.mine.role)}`:''}</span>
+ $('app').innerHTML=`<header><span class="brand">コーポレート・アントレプレナーシップ特論（CE特論）<br><small>ワークベンチ</small></span><span class="who">${S.me.name?esc(S.me.name):'（氏名未入力）'}${S.mine?`｜チーム${esc(S.mine.team)}・${esc(S.mine.company||'')}・${esc(S.mine.role)}`:''}</span>
  <span class="conds"><span class="l">依頼主の7つの条件</span>${ca.map((v,i)=>`<span class="cd ${v?'on':''}" title="${esc(COND[i])}">${i+1}</span>`).join('')}</span>
  <button class="hbtn" data-act="pull">チームの最新を読む</button>${isRec()?`<button class="hbtn p" data-act="push" title="いまの入力をメンバーに共有します（提出は各画面のボタン）">メンバーに共有</button>`:''}<button class="hbtn" data-act="menu">控え・文字</button></header>
  <div class="wrap"><nav class="side">${nav}<p class="note" style="margin:16px 8px">画面の版：${esc(CFG.version)}${CFG.endpoint?'':'<br><span class="warn">受け口が未設定（提出はできません）</span>'}</p></nav>
