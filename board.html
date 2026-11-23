@@ -30,7 +30,7 @@ td.c,th.c{text-align:center}
 .kpi div{background:var(--ac-l);color:var(--ac-d);border-radius:8px;padding:6px 12px;font-weight:700}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .box{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.btn{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}.btn.ghost{background:#fff;color:var(--ac);border:1px solid var(--ac-l2)}
 .btn.g{background:#fff;color:var(--ac-d);border:1px solid var(--ac)}
 .login{max-width:420px;margin:12vh auto;padding:24px;border:1px solid var(--line);border-radius:14px}
 input[type=text],input[type=password],select{border:1px solid var(--line);border-radius:8px;padding:6px 9px;width:100%}
@@ -71,9 +71,44 @@ function rstat(list){const real=list.filter(d=>!d.fam&&d.who);const m={};WHO.for
  const strong=real.filter(d=>(d.who==='本人'||d.who==='同じ立場')&&RXR[d.rx]>=2).length;let best=null;real.forEach(d=>{if(d.rx&&(!best||RXR[d.rx]>RXR[best.rx]))best=d;});const st={};['合っていた','外れた','まだ分からない'].forEach(s=>st[s]=real.filter(d=>d.star===s).length);return {n:real.length,fam:list.length-real.length,m,strong,best,st};}
 function rtable(rs){return `<table class="t"><tr><th></th>${RX.map(x=>`<th class="c">${x}</th>`).join('')}</tr>${WHO.map(w=>`<tr><th>${w}</th>${RX.map(x=>`<td class="c">${rs.m[w][x]}</td>`).join('')}</tr>`).join('')}</table>`;}
 function renderLogin(){$('app').innerHTML=`<div class="login"><h1>CE特論 管理ボード</h1><p class="note">${CFG.endpoint?'管理パスワードを入れてください。':'config.js に受け口のURLがありません。'}</p><input type="password" id="pw" placeholder="管理パスワード"><div style="margin-top:12px"><button class="btn" id="go">開く</button></div></div>`;$('go').onclick=()=>{ADMIN=$('pw').value;load();};}
-const TABS=[['subs','提出状況'],['form','チーム編成'],['q7','7問の集計'],['recs','聞き取り'],['view','チーム別（投影）'],['judge','判定（2/5）'],['sum','集計の一枚']];
-function render(){const A=DATA.assign;$('app').innerHTML=`<header><span class="brand">CE特論 管理ボード</span><div class="tabs">${TABS.map(t=>`<button data-tab="${t[0]}" class="${TAB===t[0]?'on':''}">${t[1]}</button>`).join('')}</div><span style="margin-left:auto"></span><button class="hbtn" data-act="reload">読み込み直す</button><button class="hbtn" data-act="print">PDF（印刷）</button></header><main>${({subs:tSubs,form:tForm,q7:tQ7,recs:tRecs,view:tView,judge:tJudge,sum:tSum})[TAB]()}</main>`;if(TAB==='judge')drawQR();}
+const TABS=[['subs','提出状況'],['form','チーム編成'],['q7','7問の集計'],['recs','聞き取り'],['hw','宿題の中身'],['talk','発言の記録'],['view','チーム別（投影）'],['judge','判定（2/5）'],['sum','集計の一枚']];
+function render(){const A=DATA.assign;$('app').innerHTML=`<header><span class="brand">CE特論 管理ボード</span><div class="tabs">${TABS.map(t=>`<button data-tab="${t[0]}" class="${TAB===t[0]?'on':''}">${t[1]}</button>`).join('')}</div><span style="margin-left:auto"></span><button class="hbtn" data-act="reload">読み込み直す</button><button class="hbtn" data-act="print">PDF（印刷）</button></header><main>${({subs:tSubs,form:tForm,q7:tQ7,recs:tRecs,hw:tHw,talk:tTalk,view:tView,judge:tJudge,sum:tSum})[TAB]()}</main>`;if(TAB==='judge')drawQR();}
 function students(){return Object.values(DATA.subs);}
+/* ---------- 宿題の中身 ---------- */
+const HWF={pre:[['company','依頼主'],['purpose','新規事業のパーパス'],['purposeWhy','理由']],
+ inno:[['company','依頼主'],['c1','新しい消費・消費者の特定'],['c2','全く新しい市場・ビジネスの創出'],['c3','新商品・新サービスの提供'],['c4','バリューチェーンの変革／拡大'],['c5','競争ルール自体の変革'],['c6','価格最適化、既存商品/サービスの改善'],['c7','新地域・新セグメントの開拓']],
+ closed:[['name','制度の名称'],['who','①対象者'],['aim','②目的'],['proc','③プロセス'],['ok','④成功点'],['ng','⑤課題']],
+ oi:[['type','類型'],['name','制度名'],['aim','①目的'],['who','②対象者'],['ok','③できていること'],['ng','④できていないこと']],
+ jr:[['v','①ビジョン'],['o','②組織'],['s','③制度'],['x','④その他']],
+ refl:[['a','①学んだこと'],['b','②本郷さんへのメッセージ'],['c','社外の反応と社内の決定']]};
+let HWK='inno';
+function hwRows(k){const A=DATA.assign;return students().filter(s=>s[k]).sort((a,b)=>String(a.sid).localeCompare(String(b.sid))).map(s=>{const m=A.members[s.sid]||{};return {sid:s.sid,name:s.name,team:m.team||'',at:s[k].at,d:s[k].data||{}};});}
+function tHw(){const f=HWF[HWK],rows=hwRows(HWK),n=students().length;
+ return `<h1>宿題の中身</h1><div class="noprint" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${KINDS.map(k=>`<button class="btn ${HWK===k[0]?'':'ghost'}" data-hw="${k[0]}">${k[1]}</button>`).join('')}<button class="btn ghost" data-act="hwcsv">この宿題をCSVで保存</button></div>
+ <p class="note">${rows.length}／${n}人が提出。最後に出したものを表示。討議の前に読み、指名や講評に使えます。</p>
+ <table class="t"><tr><th>学籍番号</th><th>氏名</th><th>チーム</th><th>提出</th>${f.map(x=>`<th>${x[1]}</th>`).join('')}</tr>${rows.map(r=>`<tr><td>${esc(r.sid)}</td><td>${esc(r.name)}</td><td>${esc(r.team)}</td><td>${fmt(r.at)}</td>${f.map(x=>`<td style="white-space:pre-wrap;min-width:120px">${esc(r.d[x[0]]||'')}</td>`).join('')}</tr>`).join('')}</table>`;}
+function dl(name,rows){const c='﻿'+rows.map(r=>r.map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download=name;a.click();}
+function hwCsv(){const f=HWF[HWK];dl(`CE特論_宿題_${HWK}.csv`,[['学籍番号','氏名','チーム','提出',...f.map(x=>x[1])],...hwRows(HWK).map(r=>[r.sid,r.name,r.team,fmt(r.at),...f.map(x=>r.d[x[0]]||'')])]);}
+/* ---------- 発言の記録（ボードで押す＋TAの集計ファイルを取り込む。この端末にだけ保存） ---------- */
+const DAYS=['12/11','12/18','12/25','1/8','1/22','1/29','2/5','2/12'];
+let TDAY=DAYS[0];
+function tget(){try{return JSON.parse(localStorage.getItem('ce_talk')||'{}');}catch(e){return {};}}
+function tset(o){try{localStorage.setItem('ce_talk',JSON.stringify(o));}catch(e){toast('この端末に保存できません');}}
+function talkTotal(sid){const o=tget();let b=0,t=0;DAYS.forEach(d=>{b+=((o.board||{})[d]||{})[sid]||0;t+=((o.ta||{})[d]||{})[sid]||0;});return {b,t,all:Math.max(b,t)};}
+function tTalk(){const A=DATA.assign,o=tget(),st=students().sort((a,b)=>String(a.sid).localeCompare(String(b.sid)));const day=(o.board||{})[TDAY]||{};
+ return `<h1>発言の記録</h1><p class="note">成績の「講義への貢献（発言数）50%」に使います。正はTAの紙の記録です。ここで押した数は補助で、この端末の中だけに保存します（送信しません）。最後にTAの集計ファイルを取り込み、回ごとに多い方を使います。</p>
+ <div class="noprint" style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${DAYS.map(d=>`<button class="btn ${TDAY===d?'':'ghost'}" data-day="${d}">${d}</button>`).join('')}</div>
+ <div class="noprint" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><button class="btn ghost" data-act="talksheet">TA用の記録表を印刷</button><label class="btn ghost">TAの集計ファイルを取り込む（CSV）<input type="file" id="taIn" accept=".csv,text/csv" style="display:none"></label><button class="btn ghost" data-act="talkcsv">成績用のCSVを保存</button></div>
+ <p class="note">TAの集計ファイルの形：1行目は見出し。列は「学籍番号, 12/11, 12/18, 12/25, 1/8, 1/22, 1/29, 2/5, 2/12」（回の列は空でも可）。</p>
+ <table class="t"><tr><th>学籍番号</th><th>氏名</th><th>チーム</th><th class="c">${TDAY} ボード</th><th></th><th class="c">ボード計</th><th class="c">TA計</th></tr>${st.map(s=>{const m=A.members[s.sid]||{},v=day[s.sid]||0,T=talkTotal(s.sid);return `<tr><td>${esc(s.sid)}</td><td>${esc(s.name)}</td><td>${esc(m.team||'')}</td><td class="c" style="font-size:18px;font-weight:700">${v}</td><td class="noprint"><button class="btn" data-tk="${esc(s.sid)}" data-d="1">＋1</button> <button class="btn ghost" data-tk="${esc(s.sid)}" data-d="-1">−1</button></td><td class="c">${T.b}</td><td class="c">${T.t}</td></tr>`;}).join('')}</table>`;}
+function talkAdd(sid,d){const o=tget();o.board=o.board||{};o.board[TDAY]=o.board[TDAY]||{};o.board[TDAY][sid]=Math.max(0,(o.board[TDAY][sid]||0)+d);tset(o);render();}
+function talkSheet(){const st=students().sort((a,b)=>String(a.sid).localeCompare(String(b.sid)));const w=window.open('','_blank');if(!w){toast('ポップアップを許可してください');return;}
+ w.document.write(`<html><head><meta charset="utf-8"><title>発言の記録表</title><style>body{font-family:sans-serif;font-size:11px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #888;padding:4px 6px;height:26px}th{background:#eee}</style></head><body><h3>CE特論 発言の記録表（TA用）　正の字で記入</h3><table><tr><th>学籍番号</th><th>氏名</th>${DAYS.map(d=>`<th>${d}</th>`).join('')}</tr>${st.map(s=>`<tr><td>${esc(s.sid)}</td><td>${esc(s.name)}</td>${DAYS.map(()=>'<td></td>').join('')}</tr>`).join('')}</table></body></html>`);w.document.close();w.print();}
+function talkImport(file){file.text().then(t=>{const L=t.replace(/^﻿/,'').split(/\r?\n/).filter(x=>x.trim());if(L.length<2){toast('行がありません');return;}const sp=x=>x.split(',').map(v=>v.replace(/^"|"$/g,'').trim());const H=sp(L[0]);const o=tget();o.ta={};let n=0;
+ L.slice(1).forEach(l=>{const c=sp(l);const sid=c[0];if(!sid)return;H.slice(1).forEach((h,i)=>{const d=DAYS.find(x=>x===h);const v=parseInt(c[i+1],10);if(d&&!isNaN(v)){o.ta[d]=o.ta[d]||{};o.ta[d][sid]=v;}});n++;});tset(o);render();toast(n+'人分を取り込みました');});}
+function talkCsv(){const A=DATA.assign,o=tget();const st=students().sort((a,b)=>String(a.sid).localeCompare(String(b.sid)));
+ dl('CE特論_成績用.csv',[['学籍番号','氏名','チーム',...DAYS.map(d=>'発言 '+d),'発言 合計','宿題の提出数（6つ中）','チームの判定（2/5）'],...st.map(s=>{const m=A.members[s.sid]||{};const per=DAYS.map(d=>Math.max(((o.board||{})[d]||{})[s.sid]||0,((o.ta||{})[d]||{})[s.sid]||0));const j=m.team&&DATA.judge[m.team]&&DATA.judge[m.team].judge;return [s.sid,s.name,m.team||'',...per,per.reduce((a,b)=>a+b,0),KINDS.filter(k=>s[k[0]]).length,j?j.data.judge:''];})]);}
+
 function tSubs(){const A=DATA.assign;const st=students().sort((a,b)=>String(a.sid).localeCompare(String(b.sid)));return `<h1>提出状況</h1><div class="kpi"><div>事前課題 ${st.filter(s=>s.pre).length}人</div><div>チーム ${Object.keys(A.teams).length}</div></div>
  <table class="t"><tr><th>学籍番号</th><th>氏名</th><th>依頼主</th><th>チーム</th>${KINDS.map(k=>`<th class="c">${k[1]}</th>`).join('')}</tr>${st.map(s=>{const m=A.members[s.sid]||{};return `<tr><td>${esc(s.sid)}</td><td>${esc(s.name)}</td><td>${esc(s.pre?s.pre.data.company:'')}</td><td>${esc(m.team||'')}${m.role==='チームリーダー'?'（チームリーダー）':''}</td>${KINDS.map(k=>`<td class="c">${s[k[0]]?fmt(s[k[0]].at):'—'}</td>`).join('')}</tr>`;}).join('')}</table>
  <h2>チームの提出</h2><table class="t"><tr><th>チーム</th><th>依頼主</th>${TPH.map(p=>`<th class="c">${p[1]}</th>`).join('')}<th>ファイル 2/4</th><th>案の名前</th><th class="c">聞き取り</th></tr>${Object.keys(A.teams).sort().map(t=>{const d=DATA.team[t]||{};const ph=DATA.tph[t]||{};const fl=DATA.files[t];return `<tr><td>${t}</td><td>${esc(A.teams[t].company)}</td>${TPH.map(p=>`<td class="c">${ph[p[0]]?fmt(ph[p[0]].at):'—'}</td>`).join('')}<td>${fl?`<a href="${esc(fl.url)}" target="_blank" rel="noopener">${esc(fl.fn)}</a> ${fmt(fl.at)}`:'—'}</td><td>${esc(d.data?d.data.title:'')}</td><td class="c">${Object.keys(DATA.recs[t]||{}).length}</td></tr>`;}).join('')}</table>
@@ -116,9 +151,9 @@ function csv(){const A=DATA.assign;const teams=Object.keys(A.teams).sort();const
  const c='﻿'+rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='CE特論_集計.csv';a.click();}
 async function saveAssign(){const A=DRAFT||DATA.assign;Object.keys(A.teams).forEach(t=>{A.teams[t].members=Object.entries(A.members).filter(([,m])=>m.team===t).map(([s])=>s);});
  try{const r=await fetch(CFG.endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({op:'assign',admin:ADMIN,assign:A})});const j=await r.json();if(!j.ok)throw new Error(j.err);DRAFT=null;await load();toast('保存しました（受講生に反映）');}catch(e){toast(e.message);}}
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;if(d.tab){TAB=d.tab;render();return;}if(d.vt){VIEWT=d.vt;render();return;}
- if(d.act==='reload')load();else if(d.act==='print')print();else if(d.act==='propose'){DRAFT=propose();render();}else if(d.act==='saveassign')saveAssign();else if(d.act==='csv')csv();});
-document.addEventListener('change',e=>{const t=e.target;if(t.dataset.mt||t.dataset.mr){if(!DRAFT)DRAFT=JSON.parse(JSON.stringify(DATA.assign));const sid=t.dataset.mt||t.dataset.mr;const s=DATA.subs[sid];DRAFT.members[sid]=DRAFT.members[sid]||{name:s.name,team:'',role:'メンバー'};if(t.dataset.mt)DRAFT.members[sid].team=t.value;else DRAFT.members[sid].role=t.value;render();}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;if(d.tab){TAB=d.tab;render();return;}if(d.hw){HWK=d.hw;render();return;}if(d.day){TDAY=d.day;render();return;}if(d.tk){talkAdd(d.tk,+d.d);return;}if(d.vt){VIEWT=d.vt;render();return;}
+ if(d.act==='reload')load();else if(d.act==='print')print();else if(d.act==='propose'){DRAFT=propose();render();}else if(d.act==='saveassign')saveAssign();else if(d.act==='csv')csv();else if(d.act==='hwcsv')hwCsv();else if(d.act==='talkcsv')talkCsv();else if(d.act==='talksheet')talkSheet();});
+document.addEventListener('change',e=>{const t=e.target;if(t.id==='taIn'&&t.files[0]){talkImport(t.files[0]);t.value='';return;}if(t.dataset.mt||t.dataset.mr){if(!DRAFT)DRAFT=JSON.parse(JSON.stringify(DATA.assign));const sid=t.dataset.mt||t.dataset.mr;const s=DATA.subs[sid];DRAFT.members[sid]=DRAFT.members[sid]||{name:s.name,team:'',role:'メンバー'};if(t.dataset.mt)DRAFT.members[sid].team=t.value;else DRAFT.members[sid].role=t.value;render();}});
 if(ADMIN&&CFG.endpoint)load();else renderLogin();
 </script>
 </body>
